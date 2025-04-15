@@ -1,31 +1,158 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>LA TV Shows | Home</title>
-    <meta name="description" content="A Catalog of Shows Set in Los Angeles" />
+    <title>Kanan's Catalog of Interests</title>
+    <meta name="description" content="A Catalog of Interests" />
     <link rel="stylesheet" href="style.css" />
-    <script type="text/javascript" src="scripts.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="data.js"></script>
+    <script src="scripts.js"></script>
   </head>
 
-  <body>
-    <header class="main-header">
-      <h1 class="title">LA TV Shows</h1>
-    </header>
-    <div id="card-container"></div>
-    <div class="card" style="display: none">
-      <div class="card-content">
-        <h2>TV Show Title</h2>
-        <img src="" alt="TV Show Poster" />
-        <ul>
-          <li>Bullet Point 1</li>
-          <li>Bullet Point 2</li>
-          <li>Bullet Point 3</li>
-        </ul>
+  <body class="dark-mode">
+    <div class="container">
+      <header class="main-header">
+        <h1 class="title">My Personal Catalog</h1>
+        <button id="theme-toggle" onclick="toggleTheme()">
+          <span class="toggle-icon">☀️</span>
+        </button>
+      </header>
+
+      <div id="category-container">
+        <select id="categorySelect" onchange="showCards()">
+          <option value="songs">🎧 Songs</option>
+          <option value="soccer">⚽ Soccer</option>
+          <option value="podcasters">🎙️ Podcasters</option>
+        </select>
+        
+        <!-- New search bar -->
+        <div class="search-container">
+          <input type="text" id="searchInput" placeholder="Search..." oninput="performSearch()">
+          <button onclick="resetSearch()" class="clear-search">✕</button>
+        </div>
+        
+        <!-- New filter dropdown -->
+        <div id="filter-container">
+          <select id="filterSelect" onchange="applyFilter()">
+            <option value="none">No Filter</option>
+          </select>
+        </div>
+        
+        <!-- Add new item button -->
+        <button id="add-item-btn" onclick="openAddItemForm()" class="action-button">
+          + Add New Item
+        </button>
+        
+        <div class="feature-buttons">
+          <button id="quotes-button" onclick="getRandomQuote()">Get Quote</button>
+          <button id="facts-button" onclick="getFunFact()">Fun Fact</button>
+          <button id="lyrics-button" onclick="getFavoriteLyrics()">Song Lyrics</button>
+        </div>
+      </div>
+
+      <div id="special-content-box">
+        <p id="special-content"></p>
+        <span class="content-attribution"></span>
+      </div>
+
+      <div id="card-container"></div>
+      
+      <div class="card" style="display: none">
+        <div class="card-content">
+          <img src="" alt="TV Show Poster" />
+          <h2>TV Show Title</h2>
+          <ul>
+            <li>Bullet Point 1</li>
+            <li>Bullet Point 2</li>
+            <li>Bullet Point 3</li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div class="footer">
-      <button onclick="quoteAlert();">Get A Quote!</button>
-      <button onclick="removeLastCard();">Remove A Card!</button>
+
+    <!-- Modal for detailed view -->
+    <div id="detail-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <div id="modal-content-container">
+          <div class="modal-left">
+            <img id="modal-image" src="" alt="Item Image">
+            <div class="modal-stats">
+              <h3>Quick Stats</h3>
+              <ul id="modal-stats-list"></ul>
+            </div>
+          </div>
+          <div class="modal-text">
+            <h2 id="modal-title">Title</h2>
+            <p id="modal-subtitle">Subtitle</p>
+            
+            <div id="modal-bio" class="modal-section">
+              <h3>Biography</h3>
+              <p id="modal-bio-text"></p>
+            </div>
+            
+            <div id="modal-details" class="modal-section">
+              <h3>Details</h3>
+              <ul id="modal-list"></ul>
+            </div>
+            
+            <div id="modal-career" class="modal-section">
+              <h3 id="modal-career-title">Career Highlights</h3>
+              <ul id="modal-career-list"></ul>
+            </div>
+            
+            <div id="modal-extras" class="modal-section">
+              <h3 id="modal-extras-title">More Info</h3>
+              <div id="modal-extras-content"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- New Modal for adding items -->
+    <div id="add-item-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" onclick="document.getElementById('add-item-modal').classList.remove('active')">&times;</span>
+        <h2 id="add-item-title">Add New Item</h2>
+        
+        <form id="add-item-form" onsubmit="event.preventDefault(); submitNewItem();">
+          <div class="form-group">
+            <label for="new-item-title">Title *</label>
+            <input type="text" id="new-item-title" placeholder="Enter song title" />
+          </div>
+          <div class="form-group">
+            <label for="new-item-artist">Artist *</label>
+            <input type="text" id="new-item-artist" placeholder="Enter artist name" />
+          </div>
+          <div class="form-group">
+            <label for="new-item-genre">Genre *</label>
+            <input type="text" id="new-item-genre" placeholder="Enter genre" />
+          </div>
+          <div class="form-group">
+            <label for="new-item-streams">Streams *</label>
+            <input type="text" id="new-item-streams" placeholder="Enter streams (e.g., 1.2 million)" />
+          </div>
+          <div class="form-group">
+            <label for="new-item-release-year">Release Year *</label>
+            <input type="number" id="new-item-release-year" placeholder="Enter release year" />
+          </div>
+          <div class="form-group">
+            <label for="new-item-picture">Picture URL (Optional)</label>
+            <input type="text" id="new-item-picture" placeholder="Enter picture URL" />
+          </div>
+          <div class="form-group">
+            <label for="new-item-lyrics">Lyrics *</label>
+            <textarea id="new-item-lyrics" placeholder="Enter lyrics"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="submit-btn">Add Song</button>
+            <button type="button" class="cancel-btn" onclick="document.getElementById('add-item-modal').classList.remove('active')">Cancel</button>
+          </div>
+        </form>
+      </div>
     </div>
   </body>
 </html>

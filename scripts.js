@@ -88,13 +88,13 @@ function updateFilterOptions(category) {
   const filterContainer = document.getElementById("filter-container");
   const filterSelect = document.getElementById("filterSelect");
   filterSelect.innerHTML = "";
-  
+
   // Add default option
   const defaultOption = document.createElement("option");
   defaultOption.value = "none";
   defaultOption.textContent = "No Filter";
   filterSelect.appendChild(defaultOption);
-  
+
   // Add category-specific filter options
   if (category === "songs") {
     addFilterOption(filterSelect, "newest", "Newest First");
@@ -108,7 +108,6 @@ function updateFilterOptions(category) {
   } else if (category === "soccer") {
     addFilterOption(filterSelect, "youngest", "Youngest Players");
     addFilterOption(filterSelect, "oldest", "Oldest Players");
-    addFilterOption(filterSelect, "most-achievements", "Most Achievements");
   }
 
   // Show the filter container
@@ -149,55 +148,40 @@ function applyFilter() {
 
 function filterItems(category, filterType, items) {
   let filteredResults = [...items];
-  
+
   switch (filterType) {
     case "newest":
       filteredResults.sort((a, b) => parseInt(b.details.releaseYear) - parseInt(a.details.releaseYear));
       break;
-    case "oldest":
-      filteredResults.sort((a, b) => parseInt(a.details.releaseYear) - parseInt(b.details.releaseYear));
-      break;
-      case "most-streams":
-        // Sort by streams (descending)
-        filteredResults.sort((a, b) => {
-          const streamsA = parseStreamNumber(a.streams);
-          const streamsB = parseStreamNumber(b.streams);
-          return streamsB - streamsA;
-        });
-        break;
-  
-      case "least-streams":
-        // Sort by streams (ascending)
-        filteredResults.sort((a, b) => {
-          const streamsA = parseStreamNumber(a.streams);
-          const streamsB = parseStreamNumber(b.streams);
-          return streamsA - streamsB;
-        });
-        break;
-    case "newest-podcast":
-      filteredResults.sort((a, b) => parseInt(b.details.podcastLaunch) - parseInt(a.details.podcastLaunch));
-      break;
-    case "oldest-podcast":
-      filteredResults.sort((a, b) => parseInt(a.details.podcastLaunch) - parseInt(b.details.podcastLaunch));
-      break;
-    case "most-episodes":
-      filteredResults.sort((a, b) => parseInt(b.details.episodeCount || 0) - parseInt(a.details.episodeCount || 0));
-      break;
-    case "youngest":
-      filteredResults.sort((a, b) => parseInt(a.details.age) - parseInt(b.details.age));
-      break;
+
     case "oldest":
       filteredResults.sort((a, b) => parseInt(b.details.age) - parseInt(a.details.age));
       break;
-    case "most-achievements":
+
+    case "most-streams":
       filteredResults.sort((a, b) => {
-        const aAchievements = a.details.achievements.split(',').length;
-        const bAchievements = b.details.achievements.split(',').length;
-        return bAchievements - aAchievements;
+        const streamsA = parseStreamNumber(a.streams);
+        const streamsB = parseStreamNumber(b.streams);
+        return streamsB - streamsA;
       });
       break;
+
+    case "least-streams":
+      filteredResults.sort((a, b) => {
+        const streamsA = parseStreamNumber(a.streams);
+        const streamsB = parseStreamNumber(b.streams);
+        return streamsA - streamsB;
+      });
+      break;
+
+    case "youngest":
+      filteredResults.sort((a, b) => parseInt(a.details.age) - parseInt(b.details.age));
+      break;
+
+    default:
+      break;
   }
-  
+
   return filteredResults;
 }
 
@@ -598,29 +582,129 @@ function toggleTheme() {
 function openAddItemForm() {
   const addModal = document.getElementById('add-item-modal');
   const selectedCategory = document.getElementById("categorySelect").value;
+  const form = document.getElementById('add-item-form');
   
-  // Set form fields based on category
-  document.getElementById('add-item-title').textContent = `Add New ${selectedCategory.slice(0, -1).charAt(0).toUpperCase() + selectedCategory.slice(0, -1).slice(1)}`;
+  // Clear previous form
+  form.innerHTML = '';
   
-  // Show/hide fields based on category
-  const songFields = document.querySelectorAll('.song-field');
-  const soccerFields = document.querySelectorAll('.soccer-field');
-  const podcastFields = document.querySelectorAll('.podcast-field');
+  // Set form title (fixing the grammar)
+  const categoryTitle = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1);
+  document.getElementById('add-item-title').textContent = `Add New ${categoryTitle}`;
   
-  songFields.forEach(field => field.style.display = 'none');
-  soccerFields.forEach(field => field.style.display = 'none');
-  podcastFields.forEach(field => field.style.display = 'none');
-  
+  // Create different form fields based on category
   if (selectedCategory === 'songs') {
-    songFields.forEach(field => field.style.display = 'block');
+    // Song form fields
+    form.innerHTML = `
+      <div class="form-group">
+        <label for="new-item-title">Title *</label>
+        <input type="text" id="new-item-title" placeholder="Enter song title" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-artist">Artist *</label>
+        <input type="text" id="new-item-artist" placeholder="Enter artist name" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-genre">Genre *</label>
+        <input type="text" id="new-item-genre" placeholder="Enter genre" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-streams">Streams *</label>
+        <input type="text" id="new-item-streams" placeholder="Enter streams (e.g., 1.2 million)" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-release-year">Release Year *</label>
+        <input type="number" id="new-item-release-year" placeholder="Enter release year" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-image">Image URL (Optional)</label>
+        <input type="text" id="new-item-image" placeholder="Enter image URL" />
+      </div>
+      <div class="form-group">
+        <label for="new-item-lyrics">Lyrics *</label>
+        <textarea id="new-item-lyrics" placeholder="Enter lyrics" required></textarea>
+      </div>
+    `;
   } else if (selectedCategory === 'soccer') {
-    soccerFields.forEach(field => field.style.display = 'block');
+    // Soccer form fields
+    form.innerHTML = `
+      <div class="form-group">
+        <label for="new-item-name">Player Name *</label>
+        <input type="text" id="new-item-name" placeholder="Enter player name" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-team">Team *</label>
+        <input type="text" id="new-item-team" placeholder="Enter team name" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-position">Position *</label>
+        <input type="text" id="new-item-position" placeholder="Enter position" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-age">Age *</label>
+        <input type="number" id="new-item-age" placeholder="Enter age" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-nationality">Nationality *</label>
+        <input type="text" id="new-item-nationality" placeholder="Enter nationality" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-image">Image URL (Optional)</label>
+        <input type="text" id="new-item-image" placeholder="Enter image URL" />
+      </div>
+      <div class="form-group">
+        <label for="new-item-height">Height (Optional)</label>
+        <input type="text" id="new-item-height" placeholder="Enter height (e.g., 180 cm)" />
+      </div>
+      <div class="form-group">
+        <label for="new-item-weight">Weight (Optional)</label>
+        <input type="text" id="new-item-weight" placeholder="Enter weight (e.g., 75 kg)" />
+      </div>
+      <div class="form-group">
+        <label for="new-item-biography">Biography *</label>
+        <textarea id="new-item-biography" placeholder="Enter player biography" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="new-item-daily-routine">Daily Routine (Optional)</label>
+        <textarea id="new-item-daily-routine" placeholder="Enter player's daily routine"></textarea>
+      </div>
+    `;
   } else if (selectedCategory === 'podcasters') {
-    podcastFields.forEach(field => field.style.display = 'block');
+    // Podcaster form fields
+    form.innerHTML = `
+      <div class="form-group">
+        <label for="new-item-title">Name *</label>
+        <input type="text" id="new-item-title" placeholder="Enter podcaster name" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-show">Show *</label>
+        <input type="text" id="new-item-show" placeholder="Enter show name" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-image">Image URL (Optional)</label>
+        <input type="text" id="new-item-image" placeholder="Enter image URL" />
+      </div>
+      <div class="form-group">
+        <label for="new-item-expertise">Expertise *</label>
+        <input type="text" id="new-item-expertise" placeholder="Enter area of expertise" required />
+      </div>
+      <div class="form-group">
+        <label for="new-item-education">Education (Optional)</label>
+        <input type="text" id="new-item-education" placeholder="Enter education background" />
+      </div>
+      <div class="form-group">
+        <label for="new-item-biography">Biography *</label>
+        <textarea id="new-item-biography" placeholder="Enter biography" required></textarea>
+      </div>
+    `;
   }
   
-  // Set form category
-  document.getElementById('add-item-form').dataset.category = selectedCategory;
+  // Add form actions
+  form.innerHTML += `
+    <div class="form-actions">
+      <button type="submit" class="submit-btn">Add ${categoryTitle}</button>
+      <button type="button" class="cancel-btn" onclick="document.getElementById('add-item-modal').classList.remove('active')">Cancel</button>
+    </div>
+  `;
   
   // Show modal
   addModal.classList.add('active');
@@ -629,45 +713,142 @@ function openAddItemForm() {
 // Function to submit new item
 function submitNewItem() {
   const selectedCategory = document.getElementById("categorySelect").value;
-
-  // Get form inputs
-  const title = document.getElementById("new-item-title").value;
-  const artist = document.getElementById("new-item-artist").value;
-  const genre = document.getElementById("new-item-genre").value;
-  const streams = document.getElementById("new-item-streams").value;
-  const releaseYear = document.getElementById("new-item-release-year").value;
-  const picture = document.getElementById("new-item-picture").value; // Optional
-  const lyrics = document.getElementById("new-item-lyrics").value;
-
-  // Validate required inputs
-  if (!title || !artist || !genre || !streams || !releaseYear || !lyrics) {
-    alert("Please fill in all required fields marked with *.");
-    return;
-  }
-
-  // Create a new song object
-  const newSong = {
-    title: title,
-    artist: artist,
-    details: {
-      genre: genre,
-      releaseYear: releaseYear,
-    },
-    streams: streams,
-    lyrics: lyrics,
-    image: picture || "https://via.placeholder.com/150", // Use placeholder if no picture provided
-    notes: ["Newly added song"], // Default note
-  };
-
-  // Add the new song to the songs array
+  
   if (selectedCategory === "songs") {
+    // Get song form inputs
+    const title = document.getElementById("new-item-title").value;
+    const artist = document.getElementById("new-item-artist").value;
+    const genre = document.getElementById("new-item-genre").value;
+    const streams = document.getElementById("new-item-streams").value;
+    const releaseYear = document.getElementById("new-item-release-year").value;
+    const imageUrl = document.getElementById("new-item-image").value || "https://upload.wikimedia.org/wikipedia/commons/c/c0/Music_note_icon.svg"; // Default image if none provided
+    const lyrics = document.getElementById("new-item-lyrics").value;
+    
+    // Validate mandatory fields
+    if (!title || !artist || !genre || !streams || !releaseYear || !lyrics) {
+      alert("Please fill in all required fields marked with *.");
+      return;
+    }
+    
+    // Create a new song object
+    const newSong = {
+      title: title,
+      artist: artist,
+      image: imageUrl,
+      notes: [
+        `A ${genre} song by ${artist}.`,
+        `Released in ${releaseYear}.`,
+        `Has ${streams} streams.`
+      ],
+      details: {
+        releaseYear: releaseYear,
+        genre: genre,
+        duration: "N/A", // Default value
+        label: "N/A" // Default value
+      },
+      lyrics: lyrics,
+      streams: streams
+    };
+    
+    // Add the new song to the songs array
     objects.songs.push(newSong);
+    
+  } else if (selectedCategory === "soccer") {
+    // Get soccer player form inputs
+    const name = document.getElementById("new-item-name").value;
+    const team = document.getElementById("new-item-team").value;
+    const position = document.getElementById("new-item-position").value;
+    const age = document.getElementById("new-item-age").value;
+    const nationality = document.getElementById("new-item-nationality").value;
+    const imageUrl = document.getElementById("new-item-image").value || "https://upload.wikimedia.org/wikipedia/commons/e/e8/Soccer_ball_icon.svg"; // Default image if none provided
+    const height = document.getElementById("new-item-height").value;
+    const weight = document.getElementById("new-item-weight").value;
+    const biography = document.getElementById("new-item-biography").value;
+    const dailyRoutine = document.getElementById("new-item-daily-routine").value;
+    
+    // Validate mandatory fields
+    if (!name || !team || !position || !age || !nationality || !biography) {
+      alert("Please fill in all required fields marked with *.");
+      return;
+    }
+    
+    // Create a new soccer player object
+    const newPlayer = {
+      title: name, // Using 'title' to maintain consistency with data structure
+      team: team,
+      image: imageUrl,
+      notes: [
+        `${position} for ${team}.`,
+        `${age} years old.`,
+        `From ${nationality}.`
+      ],
+      details: {
+        birthDate: `January 1, ${new Date().getFullYear() - age}`, // Approximate birth date
+        age: age,
+        nationality: nationality,
+        position: position,
+        height: height || "N/A",
+        weight: weight || "N/A"
+      },
+      biography: biography,
+      dailyRoutine: dailyRoutine || "No information available",
+      funFacts: ["A new rising star in football."]
+    };
+    
+    // Add the new player to the soccer array
+    objects.soccer.push(newPlayer);
+    
+  } else if (selectedCategory === "podcasters") {
+    // Get podcaster form inputs
+    const name = document.getElementById("new-item-title").value;
+    const show = document.getElementById("new-item-show").value;
+    const imageUrl = document.getElementById("new-item-image").value || "https://upload.wikimedia.org/wikipedia/commons/4/4f/Podcast_icon.svg"; // Default image if none provided
+    const expertise = document.getElementById("new-item-expertise").value;
+    const education = document.getElementById("new-item-education").value;
+    const biography = document.getElementById("new-item-biography").value;
+    
+    // Validate mandatory fields
+    if (!name || !show || !expertise || !biography) {
+      alert("Please fill in all required fields marked with *.");
+      return;
+    }
+    
+    // Create a new podcaster object
+    const newPodcaster = {
+      title: name,
+      show: show,
+      image: imageUrl,
+      notes: [
+        `Host of ${show}.`,
+        `Expert in ${expertise}.`,
+        `Provides insights on various topics.`
+      ],
+      details: {
+        education: education || "N/A",
+        expertise: expertise,
+        podcastLaunch: new Date().getFullYear().toString(),
+        episodeCount: "New podcast",
+        format: "Interview style"
+      },
+      quotes: [
+        "New voices bring new perspectives.",
+        "Knowledge is meant to be shared."
+      ],
+      topEpisodes: [
+        "Coming soon"
+      ],
+      biography: biography,
+      links: {} // No links initially
+    };
+    
+    // Add the new podcaster to the podcasters array
+    objects.podcasters.push(newPodcaster);
   }
-
+  
   // Close the modal
   document.getElementById("add-item-modal").classList.remove("active");
-
-  // Refresh the display to include the new song
+  
+  // Refresh the display to include the new item
   showCards();
 }
 

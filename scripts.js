@@ -155,7 +155,7 @@ function filterItems(category, filterType, items) {
       break;
 
     case "oldest":
-      filteredResults.sort((a, b) => parseInt(b.details.age) - parseInt(a.details.age));
+      filteredResults.sort((a, b) => parseInt(a.details.age) - parseInt(b.details.age));
       break;
 
     case "most-streams":
@@ -176,6 +176,22 @@ function filterItems(category, filterType, items) {
 
     case "youngest":
       filteredResults.sort((a, b) => parseInt(a.details.age) - parseInt(b.details.age));
+      break;
+
+    case "newest-podcast":
+      filteredResults.sort((a, b) => parseInt(b.details.podcastLaunch) - parseInt(a.details.podcastLaunch));
+      break;
+
+    case "oldest-podcast":
+      filteredResults.sort((a, b) => parseInt(a.details.podcastLaunch) - parseInt(b.details.podcastLaunch));
+      break;
+
+    case "most-episodes":
+      filteredResults.sort((a, b) => {
+        const episodesA = a.details.episodeCount ? parseInt(a.details.episodeCount.replace(/\D/g, '')) || 0 : 0;
+        const episodesB = b.details.episodeCount ? parseInt(b.details.episodeCount.replace(/\D/g, '')) || 0 : 0;
+        return episodesB - episodesA;
+      });
       break;
 
     default:
@@ -450,19 +466,10 @@ function openDetailModal(category, index) {
   } else if (category === 'soccer') {
     document.getElementById('modal-subtitle').textContent = item.team;
     
-    // Calculate age
-    const birthDateParts = item.details.birthDate.split(',')[0].trim().split(' ');
-    const birthMonth = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].indexOf(birthDateParts[0]) + 1;
-    const birthDay = parseInt(birthDateParts[1]);
-    const birthYear = parseInt(birthDateParts[2]);
-    const birthDateStr = `${birthMonth}/${birthDay}/${birthYear}`;
-    const age = calculateAge(birthDateStr);
-    
-    // Set up quick stats with additional information
+    // Set up quick stats with additional information - use the age directly from details
     const statsList = document.getElementById('modal-stats-list');
     statsList.innerHTML = `
       <li><strong>Position:</strong> ${item.details.position}</li>
-      <li><strong>Age:</strong> ${age} years</li>
       <li><strong>Height:</strong> ${item.details.height || 'Not available'}</li>
       <li><strong>Weight:</strong> ${item.details.weight || 'Not available'}</li>
       <li><strong>Nationality:</strong> ${item.details.nationality}</li>
@@ -513,7 +520,6 @@ function openDetailModal(category, index) {
     const careerList = document.getElementById('modal-career-list');
     careerList.innerHTML = `
       <li><strong>Education:</strong> ${item.details.education || 'N/A'}</li>
-      <li><strong>Format:</strong> ${item.details.format || 'N/A'}</li>
     `;
     
     // Set up top episodes in recommendations section

@@ -29,9 +29,9 @@ const objects = {
       streams: "15.2 million",
       awards: "Best Collaboration Award (2008)",
       links: {
-        spotify: "https://open.spotify.com/track/7hzlCuUQtJMQF9iEjDgGT8",
-        appleMusic: "https://music.apple.com/us/album/hey-baby-feat-mos-def/219496064?i=219496361",
-        youtube: "https://www.youtube.com/watch?v=6H20JJPyMjY"
+        spotify: "https://open.spotify.com/track/1Bsl6Jw7bJtQ4pc7OQREog",
+        appleMusic: "https://music.apple.com/us/album/hey-baby-feat-mos-def/1440769931?i=1440769945",
+        youtube: "https://www.youtube.com/watch?v=DOTUzWtr5Yg"
       },
       recommendations: [
         { 
@@ -75,9 +75,9 @@ const objects = {
       streams: "8.7 million",
       awards: "Underground Hit of the Year (1999)",
       links: {
-        spotify: "https://open.spotify.com/track/2rQfjHEzRTQZsHnQrjRZ3A",
-        appleMusic: "https://music.apple.com/us/album/travellin-man/80635149?i=80635065",
-        youtube: "https://www.youtube.com/watch?v=Kr4EQDVe3VE"
+        spotify: "https://open.spotify.com/track/5BAwVGuohBVscZWyoLCkkG",
+        appleMusic: "https://music.apple.com/us/album/travellin-man-feat-mos-def-remastered/320626506",
+        youtube: "https://www.youtube.com/watch?v=YdQ_wn-g5aU"
       },
       recommendations: [
         { 
@@ -122,7 +122,7 @@ const objects = {
       awards: "Multi-Platinum Certification",
       links: {
         spotify: "https://open.spotify.com/track/68Dni7IE4VyPkTOH9mRWHr",
-        appleMusic: "https://music.apple.com/us/album/no-role-modelz/1530334388?i=1530334630",
+        appleMusic: "https://music.apple.com/us/album/no-role-modelz/1600766204?i=1600766436",
         youtube: "https://www.youtube.com/watch?v=J-6eUsSKv7Q"
       },
       recommendations: [
@@ -167,9 +167,9 @@ const objects = {
       streams: "3.5 million",
       awards: "Best Reggae Track (European Reggae Awards)",
       links: {
-        spotify: "https://open.spotify.com/artist/1YeNaPA4CzSM96zOKj9tXe",
-        appleMusic: "https://music.apple.com/us/artist/mokalamity/312922965",
-        youtube: "https://www.youtube.com/watch?v=i8zt6bIp37I"
+        spotify: "https://open.spotify.com/track/1pJFPBsuD7mkANqolDZQR9",
+        appleMusic: "https://music.apple.com/us/album/me-say/250197870?i=250197943",
+        youtube: "https://www.youtube.com/watch?v=ni36rdQa2XE"
       },
       recommendations: [
         { 
@@ -213,8 +213,8 @@ const objects = {
       streams: "350 million",
       awards: "Multiple Gold and Platinum certifications",
       links: {
-        spotify: "https://open.spotify.com/track/3QRGYDFFCFfV5SsbR92NX9",
-        appleMusic: "https://music.apple.com/us/album/freed-from-desire/1193113880?i=1193114206",
+        spotify: "https://open.spotify.com/track/3u5N55tHf7hXATSQrjBh2q",
+        appleMusic: "https://music.apple.com/us/album/freed-from-desire/287591338?i=287592533",
         youtube: "https://www.youtube.com/watch?v=p3l7fgvrEKM"
       },
       recommendations: [
@@ -259,8 +259,8 @@ const objects = {
       streams: "125 million",
       awards: "Part of the album that stayed on Billboard charts for 741 weeks",
       links: {
-        spotify: "https://open.spotify.com/track/1NjpE9jMSPiY2szAeKwRVS",
-        appleMusic: "https://music.apple.com/us/album/the-great-gig-in-the-sky/1065973975?i=1065974386",
+        spotify: "https://open.spotify.com/track/2TjdnqlpwOjhijHCwHCP2d",
+        appleMusic: "https://music.apple.com/us/album/the-great-gig-in-the-sky/1065973699?i=1065973707",
         youtube: "https://www.youtube.com/watch?v=mPGv8L3a_sY"
       },
       recommendations: [
@@ -418,7 +418,7 @@ links: {
   instagram: "https://www.instagram.com/lamineyamal/",
   clubInstagram: "https://www.instagram.com/fcbarcelona/",
   website: "https://www.fcbarcelona.com/en/football/first-team/players/men/207192/lamine-yamal",
-  transfermarkt: "https://www.transfermarkt.com/lamine-yamal/profil/spieler/925397"
+  transfermarkt: "https://www.transfermarkt.com/lamine-yamal/profil/spieler/937958"
 }
 },
     {
@@ -480,9 +480,8 @@ funFacts: [
 biography: "Roberto Carlos is a retired Brazilian footballer who played as a left-back. He is widely regarded as one of the greatest left-backs in history, known for his powerful free kicks and speed.",
 dailyRoutine: "Carlos's routine during his playing days included intense training sessions, focusing on speed and strength, and a disciplined diet to maintain peak physical condition.",
 links: {
-  instagram: "https://www.instagram.com/robertocarlosoficial/",
+  instagram: "https://www.instagram.com/oficialrc3/",
   clubInstagram: "https://www.instagram.com/realmadrid/",
-  website: "https://www.realmadrid.com/en/about-real-madrid/history/football-legends/roberto-carlos-da-silva",
   transfermarkt: "https://www.transfermarkt.com/roberto-carlos/profil/spieler/3569"
 }
 },
@@ -510,9 +509,8 @@ funFacts: [
 biography: "Thierry Henry is a retired French footballer who played as a forward. He is Arsenal's all-time leading scorer and is known for his pace, skill, and finishing ability.",
 dailyRoutine: "Henry's routine during his playing days included rigorous training sessions, focusing on agility and finishing, and a balanced diet to maintain his athleticism.",
 links: {
-  instagram: "https://www.instagram.com/thihenry/",
+  instagram: "https://www.instagram.com/thierryhenry/",
   clubInstagram: "https://www.instagram.com/arsenal/",
-  website: "https://www.arsenal.com/historic/players/thierry-henry",
   transfermarkt: "https://www.transfermarkt.com/thierry-henry/profil/spieler/3207"
 }
 },
@@ -543,7 +541,7 @@ links: {
   instagram: "https://www.instagram.com/paolomaldini/",
   clubInstagram: "https://www.instagram.com/acmilan/",
   website: "https://www.acmilan.com/en/club/hall-of-fame/players/paolo-maldini",
-  transfermarkt: "https://www.transfermarkt.com/paolo-maldini/profil/spieler/5817"
+  transfermarkt: "https://www.transfermarkt.com/paolo-maldini/profil/spieler/5803"
 }
 },
     {
@@ -593,7 +591,9 @@ links: {
         expertise: "Visual system, circadian rhythms, and neuroplasticity",
         podcastLaunch: "2021",
         averageEpisodeLength: "2 hours",
-        listeningStats: "Millions of downloads per episode"
+        episodeCount: "100+",
+        audience: "Millions of downloads per episode",
+        podcastStyle: "Scientific, educational, research-based"
       },
       quotes: [
         "The best way to ensure you reach your goals is to make your path sustainable.",
@@ -628,8 +628,10 @@ links: {
       details: {
         education: "Ph.D. in Computer Science from Drexel University",
         expertise: "Artificial intelligence, deep learning, and autonomous vehicles",
+        podcastLaunch: "2018",
+        episodeCount: "300+",
+        podcastStyle: "Long-form, philosophical, in-depth interviews",
         notableGuests: "Elon Musk, Roger Penrose, Joe Rogan",
-        podcastStyle: "Long-form, in-depth interviews",
         additionalWork: "Teaches at MIT, researches human-robot interaction"
       },
       quotes: [
@@ -664,10 +666,12 @@ links: {
       ],
       details: {
         background: "Stand-up comedian, martial artist, and TV host",
-        podcastStart: "2009",
-        exclusiveDeal: "$100 million Spotify exclusivity contract",
-        episodeCount: "Over 2,000 episodes",
-        interviewStyle: "Conversational, curious, and often controversial"
+        expertise: "Mixed martial arts, comedy, and pop culture",
+        podcastLaunch: "2009",
+        episodeCount: "2000+",
+        podcastStyle: "Conversational, curious, and often controversial",
+        notableDeal: "$100 million Spotify exclusivity contract",
+        notableGuests: "Elon Musk, Jordan Peterson, Bernie Sanders, Neil deGrasse Tyson"
       },
       quotes: [
         "Be the hero of your own story.",
@@ -701,9 +705,12 @@ links: {
       ],
       details: {
         education: "Ph.D. in Computer Science from MIT",
-        bestSellingBooks: "Deep Work, Digital Minimalism, So Good They Can't Ignore You",
+        expertise: "Productivity, deep work, digital minimalism, and tech–society interaction",
+        podcastLaunch: "2020",
+        episodeCount: "200+",
+        podcastStyle: "Advice-based, structured, productivity-focused",
         academicPosition: "Associate Professor at Georgetown University",
-        podcastFocus: "Productivity strategies, focused work, and career development",
+        bestSellingBooks: "Deep Work, Digital Minimalism, So Good They Can't Ignore You",
         uniqueAspect: "Does not use social media"
       },
       quotes: [
@@ -720,15 +727,13 @@ links: {
       ],
       biography: "Cal Newport is a computer science professor at Georgetown University and a New York Times bestselling author. Unlike many productivity experts, Newport has never had a social media account, giving him a unique perspective on digital distraction. His work focuses on the intersection of technology and society, particularly how technological tools and practices affect our ability to do valuable work, find meaning, and live a good life. His concepts of 'deep work' and 'digital minimalism' have influenced how many people approach their professional and personal lives in the digital age.",
       links: {
-        twitter: "https://twitter.com/calnewport",
-        instagram: "https://www.instagram.com/calnewport.author/",
-        youtube: "https://www.youtube.com/channel/UCze3CYgIWqum3fyHUMUIrhA",
-        website: "https://www.calnewport.com/",
-        spotify: "https://open.spotify.com/show/0e9lFr3AdJKuCacKJdH099"
+        twitter: "https://x.com/ProfCalNewport",
+        youtube: "https://www.youtube.com/@CalNewportMedia",
+        website: "https://www.calnewport.com/"
       }
     }
   ]
 };
 
 // Export the data so it can be imported in scripts.js
-// This makes the data available to other JavaScript files 
+// This makes the data available to other JavaScript files

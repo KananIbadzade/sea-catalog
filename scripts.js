@@ -1,45 +1,36 @@
-//************ Catalog Application - Logic and Functionality ************//
+//***** Catalog Application - Logic and Functionality *****//
 
 // The data structures are defined in data.js
 
+let filteredItems = []; // storing filtered/sorted items
+let currentFilter = 'none'; // tracking current filter
+let currentSearchTerm = ''; // tracking current search term
 
-let filteredItems = []; // storing filtered or sorted items
-let currentFilter = 'none'; // track current filter
-let currentSearchTerm = ''; // Track current search term
-
+// Sets up the like system by initializing localStorage for liked items
 function setupLikeSystem() {
-  // Initialize likes in localStorage if needed
-  if (!localStorage.getItem('likedItems')) {
-    localStorage.setItem('likedItems', JSON.stringify({}));
-  }
+  localStorage.removeItem('likedItems');
+  localStorage.setItem('likedItems', JSON.stringify({}));
 }
 
+// Shows the cards for the currently selected category and resets filters/search
 function showCards() {
   const selectedCategory = document.getElementById("categorySelect").value;
-  
-  // Reset filters and search when changing categories
+
   resetFiltersAndSearch();
-  
-  // Get items and show them
   displayItems(selectedCategory);
-  
-  // Update visible buttons based on category
   updateFeatureButtons(selectedCategory);
   updateFilterOptions(selectedCategory);
 }
 
+// Displays the items (cards) for a given category, handling likes and delete
 function displayItems(category, items = null) {
-  // If no items provided, use the main data
   const displayedItems = items || objects[category];
-  filteredItems = [...displayedItems]; // Store current displayed items
-  
+  filteredItems = [...displayedItems];
+
   const cardContainer = document.getElementById("card-container");
   cardContainer.innerHTML = "";
-  
+
   const templateCard = document.querySelector(".card");
-  
-  // Get liked items from localStorage
-  const likedItems = JSON.parse(localStorage.getItem('likedItems')) || {};
 
   if (displayedItems.length === 0) {
     const noResults = document.createElement("p");
@@ -51,15 +42,10 @@ function displayItems(category, items = null) {
 
   for (let i = 0; i < displayedItems.length; i++) {
     const item = displayedItems[i];
-    
-    // Initialize likes property if it doesn't exist
-    if (item.likes === undefined) {
-      item.likes = 0;
-    }
-    
+
     const card = templateCard.cloneNode(true);
     card.style.display = "block";
-    card.dataset.index = items ? item.originalIndex : i; // Use original index if available
+    card.dataset.index = items ? item.originalIndex : i;
     card.dataset.category = category;
 
     card.querySelector("h2").textContent = item.title;
@@ -74,7 +60,6 @@ function displayItems(category, items = null) {
       ul.appendChild(li);
     }
 
-    // Add like button and counter
     const likeContainer = document.createElement("div");
     likeContainer.className = "like-container";
 
@@ -83,71 +68,52 @@ function displayItems(category, items = null) {
     likeButton.innerHTML = "❤️";
     likeButton.title = "Like";
 
-    // Generate a unique ID for the item that's more consistent
-    const itemId = `${category}-${i}-${item.title.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase()}`;
-
-    // Get likes from localStorage
+    const itemId = `${category}-${i}-${item.title.replace(/\s+/g, '-').toLowerCase()}`;
     const likedItems = JSON.parse(localStorage.getItem('likedItems') || '{}');
 
-    // Check if user already liked this item
     if (likedItems[itemId]) {
+      item.likes = 1;
       likeButton.classList.add("liked");
-      likeButton.disabled = true;
+    } else {
+      item.likes = 0;
     }
 
     const likeCount = document.createElement("span");
     likeCount.className = "like-count";
     likeCount.textContent = item.likes > 0 ? item.likes : "";
 
-    // Add event listener for like button with explicit event stop
     likeButton.addEventListener("click", function(e) {
-      e.preventDefault();
-      e.stopPropagation(); // Prevent opening modal
-      
-      // Check if already liked
-      if (likedItems[itemId]) {
-        return; // Already liked, do nothing
-      }
-      
-      // Update likes in the data
-      if (!item.likes) item.likes = 0;
-      item.likes++;
-      likeCount.textContent = item.likes;
-      
-      // Mark as liked in localStorage
-      likedItems[itemId] = true;
-      localStorage.setItem('likedItems', JSON.stringify(likedItems));
-      
-      // Update UI
-      likeButton.classList.add("liked");
-      likeButton.disabled = true;
-      
-      // Debug output to confirm like registration
-      console.log(`Liked item: ${itemId} - Current likes: ${item.likes}`);
-      
-      return false; // Ensure no propagation
-    });
+      e.stopPropagation();
 
-    // Position the like button more clearly
-    likeContainer.style.position = "relative";
-    likeContainer.style.zIndex = "10"; // Ensure it's above other elements
+      if (likedItems[itemId]) {
+        likedItems[itemId] = false;
+        item.likes = 0;
+        likeCount.textContent = "";
+        likeButton.classList.remove("liked");
+      } else {
+        likedItems[itemId] = true;
+        item.likes = 1;
+        likeCount.textContent = "1";
+        likeButton.classList.add("liked");
+      }
+
+      localStorage.setItem('likedItems', JSON.stringify(likedItems));
+    });
 
     likeContainer.appendChild(likeButton);
     likeContainer.appendChild(likeCount);
     card.querySelector(".card-content").appendChild(likeContainer);
 
-    // Add delete button
     const deleteBtn = document.createElement("button");
     deleteBtn.className = "delete-btn";
     deleteBtn.innerHTML = "✖";
     deleteBtn.title = "Delete item";
     deleteBtn.addEventListener("click", function(e) {
-      e.stopPropagation(); // Prevent opening modal
+      e.stopPropagation();
       deleteItem(category, items ? item.originalIndex : i);
     });
     card.querySelector(".card-content").appendChild(deleteBtn);
 
-    // Add click event to show the modal
     card.addEventListener('click', function() {
       const index = parseInt(this.dataset.index);
       openDetailModal(category, index);
@@ -157,18 +123,18 @@ function displayItems(category, items = null) {
   }
 }
 
+
+// Updates the filter dropdown options based on the selected category
 function updateFilterOptions(category) {
   const filterContainer = document.getElementById("filter-container");
   const filterSelect = document.getElementById("filterSelect");
   filterSelect.innerHTML = "";
 
-  // Add default option
   const defaultOption = document.createElement("option");
   defaultOption.value = "none";
   defaultOption.textContent = "No Filter";
   filterSelect.appendChild(defaultOption);
 
-  // Add category-specific filter options
   if (category === "songs") {
     addFilterOption(filterSelect, "newest", "Newest First");
     addFilterOption(filterSelect, "oldest", "Oldest First");
@@ -183,10 +149,10 @@ function updateFilterOptions(category) {
     addFilterOption(filterSelect, "oldest", "Oldest Players");
   }
 
-  // Show the filter container
   filterContainer.style.display = "flex";
 }
 
+// Adds a new filter option to the filter dropdown
 function addFilterOption(select, value, text) {
   const option = document.createElement("option");
   option.value = value;
@@ -194,31 +160,28 @@ function addFilterOption(select, value, text) {
   select.appendChild(option);
 }
 
+// Applies the selected filter and updates the displayed items
 function applyFilter() {
   const selectedCategory = document.getElementById("categorySelect").value;
   const filterValue = document.getElementById("filterSelect").value;
   currentFilter = filterValue;
-  
-  // Get original or searched items
+
   let itemsToFilter = [...objects[selectedCategory]];
-  
-  // Apply search first if there's a search term
+
   if (currentSearchTerm) {
     itemsToFilter = searchItems(selectedCategory, currentSearchTerm);
   }
-  
-  // Map original indices before filtering
+
   itemsToFilter = itemsToFilter.map((item, index) => ({...item, originalIndex: item.originalIndex !== undefined ? item.originalIndex : index}));
-  
-  // Apply selected filter
+
   if (filterValue !== "none") {
     itemsToFilter = filterItems(selectedCategory, filterValue, itemsToFilter);
   }
-  
-  // Display filtered items
+
   displayItems(selectedCategory, itemsToFilter);
 }
 
+// Sorts or filters items based on the chosen filter type
 function filterItems(category, filterType, items) {
   let filteredResults = [...items];
 
@@ -274,97 +237,87 @@ function filterItems(category, filterType, items) {
   return filteredResults;
 }
 
+// Searches items in a category for a given search term
 function searchItems(category, searchTerm) {
   searchTerm = searchTerm.toLowerCase();
   const results = objects[category].filter((item, index) => {
-    // Save the original index for reference
     item.originalIndex = index;
-    
-    // Search in title
+
     if (item.title.toLowerCase().includes(searchTerm)) return true;
-    
-    // Search in category-specific fields
+
     if (category === "songs" && item.artist.toLowerCase().includes(searchTerm)) return true;
     if (category === "podcasters" && item.show.toLowerCase().includes(searchTerm)) return true;
     if (category === "soccer" && item.team.toLowerCase().includes(searchTerm)) return true;
-    
-    // Search in notes
+
     for (const note of item.notes) {
       if (note.toLowerCase().includes(searchTerm)) return true;
     }
-    
-    // Search in details
+
     for (const [key, value] of Object.entries(item.details)) {
       if (value.toString().toLowerCase().includes(searchTerm)) return true;
     }
-    
+
     return false;
   });
-  
+
   return results;
 }
 
+// Handles the search input and updates the displayed items
 function performSearch() {
   const searchTerm = document.getElementById("searchInput").value.trim();
   currentSearchTerm = searchTerm;
-  
+
   const selectedCategory = document.getElementById("categorySelect").value;
-  
+
   if (searchTerm === "") {
-    // If search is cleared, reset to showing all items with current filter
     resetSearch();
     return;
   }
-  
+
   let results = searchItems(selectedCategory, searchTerm);
-  
-  // Apply filter if one is selected
+
   if (currentFilter !== "none") {
     results = filterItems(selectedCategory, currentFilter, results);
   }
-  
-  // Display results
+
   displayItems(selectedCategory, results);
 }
 
+// Clears the search input and resets the displayed items
 function resetSearch() {
   document.getElementById("searchInput").value = "";
   currentSearchTerm = "";
-  
+
   const selectedCategory = document.getElementById("categorySelect").value;
-  
-  // Apply only the filter if one is active
+
   if (currentFilter !== "none") {
     let items = [...objects[selectedCategory]].map((item, index) => ({...item, originalIndex: index}));
     items = filterItems(selectedCategory, currentFilter, items);
     displayItems(selectedCategory, items);
   } else {
-    // Display all items if no filter
     displayItems(selectedCategory);
   }
 }
 
+// Resets both filters and search when switching categories
 function resetFiltersAndSearch() {
-  // Reset filter dropdown
   document.getElementById("filterSelect").value = "none";
   currentFilter = "none";
-  
-  // Reset search
+
   document.getElementById("searchInput").value = "";
   currentSearchTerm = "";
 }
 
+// Shows or hides feature buttons (like quote, fact, lyrics) based on category
 function updateFeatureButtons(category) {
-  // Hide all buttons first
   document.getElementById("quotes-button").style.display = "none";
   document.getElementById("facts-button").style.display = "none";
   document.getElementById("lyrics-button").style.display = "none";
-  
-  // Hide the special content box initially
+
   document.getElementById("special-content-box").classList.remove("active");
   document.getElementById("special-content-box").style.display = "none";
-  
-  // Show relevant buttons based on category
+
   if (category === "songs") {
     document.getElementById("lyrics-button").style.display = "block";
   } else if (category === "soccer") {
@@ -374,63 +327,66 @@ function updateFeatureButtons(category) {
   }
 }
 
+// Picks and displays a random quote from a podcaster
 function getRandomQuote() {
   const selectedCategory = document.getElementById("categorySelect").value;
   const specialContentBox = document.getElementById("special-content-box");
   const specialContent = document.getElementById("special-content");
   const contentAttribution = document.querySelector(".content-attribution");
-  
-  // Only show quotes for podcasters category
+
   if (selectedCategory === "podcasters") {
     const podcasters = objects.podcasters;
     const randomPodcaster = podcasters[Math.floor(Math.random() * podcasters.length)];
     const randomQuote = randomPodcaster.quotes[Math.floor(Math.random() * randomPodcaster.quotes.length)];
-    
+
     specialContent.textContent = `"${randomQuote}"`;
     contentAttribution.textContent = `— ${randomPodcaster.title}, ${randomPodcaster.show}`;
-    
+
     specialContentBox.style.display = "block";
     specialContentBox.classList.add("active");
   }
 }
 
+// Picks and displays a random fun fact from a soccer player
 function getFunFact() {
   const selectedCategory = document.getElementById("categorySelect").value;
   const specialContentBox = document.getElementById("special-content-box");
   const specialContent = document.getElementById("special-content");
   const contentAttribution = document.querySelector(".content-attribution");
-  
+
   if (selectedCategory === "soccer") {
     const players = objects.soccer;
     const randomPlayer = players[Math.floor(Math.random() * players.length)];
     const randomFact = randomPlayer.funFacts[Math.floor(Math.random() * randomPlayer.funFacts.length)];
-    
+
     specialContent.textContent = randomFact;
     contentAttribution.textContent = `Fun fact about ${randomPlayer.title}`;
-    
+
     specialContentBox.style.display = "block";
     specialContentBox.classList.add("active");
   }
 }
 
+// Picks and displays favorite lyrics from a random song
 function getFavoriteLyrics() {
   const selectedCategory = document.getElementById("categorySelect").value;
   const specialContentBox = document.getElementById("special-content-box");
   const specialContent = document.getElementById("special-content");
   const contentAttribution = document.querySelector(".content-attribution");
-  
+
   if (selectedCategory === "songs") {
     const songs = objects.songs;
     const randomSong = songs[Math.floor(Math.random() * songs.length)];
-    
+
     specialContent.textContent = randomSong.lyrics;
     contentAttribution.textContent = `"${randomSong.title}" by ${randomSong.artist}`;
-    
+
     specialContentBox.style.display = "block";
     specialContentBox.classList.add("active");
   }
 }
 
+// Calculates age from a given birth date string
 function calculateAge(birthDateStr) {
   const birthDate = new Date(birthDateStr);
   const today = new Date();
@@ -442,84 +398,71 @@ function calculateAge(birthDateStr) {
   return age;
 }
 
-// Modify the openDetailModal function to fix the comments section
+// Opens the detail modal for an item, showing all its info and comments
 function openDetailModal(category, index) {
   const modal = document.getElementById('detail-modal');
   const item = objects[category][index];
-  
-  // Set the modal content
+
   document.getElementById('modal-image').src = item.image;
   document.getElementById('modal-title').textContent = item.title;
-  
-  // Clear previous content
+
   document.getElementById('modal-stats-list').innerHTML = '';
   document.getElementById('modal-list').innerHTML = '';
   document.getElementById('modal-career-list').innerHTML = '';
   document.getElementById('modal-bio-text').innerHTML = '';
   document.getElementById('modal-extras-content').innerHTML = '';
-  
-  // Handle different content types
+
   if (category === 'songs') {
     document.getElementById('modal-subtitle').textContent = item.artist;
-    
-    // Set up quick stats
+
     const statsList = document.getElementById('modal-stats-list');
     statsList.innerHTML = `
       <li><strong>Artist:</strong> ${item.artist}</li>
       <li><strong>Genre:</strong> ${item.details.genre}</li>
       <li><strong>Streams:</strong> ${item.streams}</li>
     `;
-    
-    // Add streaming links if available
+
     if (item.links) {
       const socialLinksHtml = createSocialLinksHtml(item.links, 'song');
       statsList.innerHTML += socialLinksHtml;
     }
-    
-    // Set career title to "Song Info"
+
     document.getElementById('modal-career-title').textContent = 'Song Recognition';
-    
-    // Add career highlights
+
     const careerList = document.getElementById('modal-career-list');
     if (item.awards) {
       const li = document.createElement('li');
       li.innerHTML = `<strong>Awards:</strong> ${item.awards}`;
       careerList.appendChild(li);
     }
-    
-    // Add streaming info
+
     const streamLi = document.createElement('li');
     streamLi.innerHTML = `<strong>Streaming Performance:</strong> ${item.streams} streams across platforms`;
     careerList.appendChild(streamLi);
-    
-    // Set biography to lyrics with toggle
+
     document.querySelector('#modal-bio h3').textContent = 'Lyrics';
     const bioText = document.getElementById('modal-bio-text');
-    
-    // Create container for lyrics
+
     const lyricsContainer = document.createElement('div');
-    
-    // Create the lyrics paragraph
+
     const lyricsParagraph = document.createElement('p');
     lyricsParagraph.textContent = item.lyrics;
     lyricsParagraph.id = 'lyrics-short';
     lyricsContainer.appendChild(lyricsParagraph);
-    
-    // Create the full lyrics paragraph (initially hidden)
+
     const fullLyricsParagraph = document.createElement('p');
     fullLyricsParagraph.textContent = item.fullLyrics || item.lyrics;
     fullLyricsParagraph.id = 'lyrics-full';
     fullLyricsParagraph.style.display = 'none';
     lyricsContainer.appendChild(fullLyricsParagraph);
-    
-    // Create toggle button
+
     const toggleButton = document.createElement('button');
     toggleButton.textContent = 'See More';
     toggleButton.classList.add('toggle-button');
     toggleButton.onclick = function() {
       const shortLyrics = document.getElementById('lyrics-short');
       const fullLyrics = document.getElementById('lyrics-full');
-      
+
       if (shortLyrics.style.display !== 'none') {
         shortLyrics.style.display = 'none';
         fullLyrics.style.display = 'block';
@@ -531,16 +474,14 @@ function openDetailModal(category, index) {
       }
     };
     lyricsContainer.appendChild(toggleButton);
-    
+
     bioText.appendChild(lyricsContainer);
-    
-    // Remove "You Might Also Like" section (recommendations)
+
     document.getElementById('modal-extras-title').textContent = '';
     document.getElementById('modal-extras-content').innerHTML = '';
   } else if (category === 'soccer') {
     document.getElementById('modal-subtitle').textContent = item.team;
-    
-    // Set up quick stats with additional information - use the age directly from details
+
     const statsList = document.getElementById('modal-stats-list');
     statsList.innerHTML = `
       <li><strong>Position:</strong> ${item.details.position}</li>
@@ -548,29 +489,23 @@ function openDetailModal(category, index) {
       <li><strong>Weight:</strong> ${item.details.weight || 'Not available'}</li>
       <li><strong>Nationality:</strong> ${item.details.nationality}</li>
     `;
-    
-    // Add social media links if available
+
     if (item.links) {
       const socialLinksHtml = createSocialLinksHtml(item.links, 'soccer');
       statsList.innerHTML += socialLinksHtml;
     }
-    
-    // Set biography
+
     document.getElementById('modal-bio-text').textContent = item.biography;
     document.querySelector('#modal-bio h3').textContent = 'Biography';
-    
-    // Add career highlights
+
     document.getElementById('modal-career-title').textContent = 'Daily Routine';
     document.getElementById('modal-career-list').innerHTML = `<li>${item.dailyRoutine}</li>`;
-    
-    // Remove Fun Facts section
+
     document.getElementById('modal-extras-title').textContent = '';
     document.getElementById('modal-extras-content').innerHTML = '';
-    
   } else if (category === 'podcasters') {
     document.getElementById('modal-subtitle').textContent = item.show;
-    
-    // Set up quick stats
+
     const statsList = document.getElementById('modal-stats-list');
     statsList.innerHTML = `
       <li><strong>Show:</strong> ${item.show}</li>
@@ -578,29 +513,25 @@ function openDetailModal(category, index) {
       <li><strong>Episodes:</strong> ${item.details.episodeCount || 'N/A'}</li>
       <li><strong>Launch Year:</strong> ${item.details.podcastLaunch || 'N/A'}</li>
     `;
-    
-    // Add social media links if available
+
     if (item.links) {
       const socialLinksHtml = createSocialLinksHtml(item.links, 'podcaster');
       statsList.innerHTML += socialLinksHtml;
     }
-    
-    // Set biography
+
     document.getElementById('modal-bio-text').textContent = item.biography || '';
     document.querySelector('#modal-bio h3').textContent = 'Biography';
-    
-    // Add career section with education
+
     document.getElementById('modal-career-title').textContent = 'Show Details';
     const careerList = document.getElementById('modal-career-list');
     careerList.innerHTML = `
       <li><strong>Education:</strong> ${item.details.education || 'N/A'}</li>
     `;
-    
-    // Set up top episodes in recommendations section
+
     document.getElementById('modal-extras-title').textContent = 'Top Episodes';
     const extrasContent = document.getElementById('modal-extras-content');
     extrasContent.innerHTML = '';
-    
+
     if (item.topEpisodes && item.topEpisodes.length > 0) {
       const ul = document.createElement('ul');
       item.topEpisodes.forEach(episode => {
@@ -613,17 +544,15 @@ function openDetailModal(category, index) {
       extrasContent.textContent = 'No featured episodes available.';
     }
   }
-  
-  // Populate details
+
   const modalList = document.getElementById('modal-list');
-  
+
   const details = item.details;
   for (const [key, value] of Object.entries(details)) {
-    // Skip height and weight for soccer players since we already display them in stats
     if (category === 'soccer' && (key === 'height' || key === 'weight')) {
       continue;
     }
-    
+
     const li = document.createElement('li');
     const formattedKey = key.replace(/([A-Z])/g, ' $1').replace(/^./, function(str) { 
       return str.toUpperCase(); 
@@ -631,14 +560,12 @@ function openDetailModal(category, index) {
     li.textContent = `${formattedKey}: ${value}`;
     modalList.appendChild(li);
   }
-  
-  // Remove any existing comment section first to prevent duplication
+
   const existingCommentSection = document.querySelector('.comments-section');
   if (existingCommentSection) {
     existingCommentSection.remove();
   }
-  
-  // Add comment section to the modal
+
   const commentsContainer = document.createElement('div');
   commentsContainer.className = 'modal-section comments-section';
   commentsContainer.innerHTML = `
@@ -651,21 +578,18 @@ function openDetailModal(category, index) {
       <button class="submit-btn" id="post-comment-btn">Post Comment</button>
     </div>
   `;
-  
+
   document.querySelector('.modal-text').appendChild(commentsContainer);
-  
-  // Initialize comments array if it doesn't exist
+
   if (!item.comments) {
     item.comments = [];
   }
-  
-  // Add word count listener
+
   const commentTextarea = document.getElementById('new-comment');
   commentTextarea.addEventListener('input', function() {
     const words = this.value.trim().split(/\s+/).filter(Boolean).length;
     document.getElementById('word-count').textContent = words;
-    
-    // Disable button if word count exceeds 100
+
     const submitBtn = document.getElementById('post-comment-btn');
     if (words > 100) {
       submitBtn.disabled = true;
@@ -675,30 +599,27 @@ function openDetailModal(category, index) {
       document.getElementById('word-count').style.color = '';
     }
   });
-  
-  // Add click event for posting comment
+
   document.getElementById('post-comment-btn').addEventListener('click', function() {
     addComment(category, index);
   });
-  
-  // Display existing comments
+
   displayComments(item.comments);
-  
-  // Show the modal with animation
+
   modal.classList.add('active');
-  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  document.body.style.overflow = 'hidden';
 }
 
-// Update the displayComments function
+// Shows all comments for an item in the modal
 function displayComments(comments) {
   const commentsList = document.getElementById('comments-list');
   commentsList.innerHTML = '';
-  
+
   if (!comments || comments.length === 0) {
     commentsList.innerHTML = '<p class="no-comments">No comments yet. Be the first to share your thoughts!</p>';
     return;
   }
-  
+
   comments.forEach((comment) => {
     const commentEl = document.createElement('div');
     commentEl.className = 'comment';
@@ -713,61 +634,58 @@ function displayComments(comments) {
   });
 }
 
-// Update the addComment function
+// Adds a new comment to an item and updates the display
 function addComment(category, index) {
   const commenterName = document.getElementById('commenter-name').value.trim().substring(0, 20);
   const commentText = document.getElementById('new-comment').value.trim();
-  
+
   if (!commenterName) {
     alert('Please enter your name before posting.');
     return;
   }
-  
+
   if (!commentText) {
     alert('Please enter a comment before posting.');
     return;
   }
-  
-  // Check word count
+
   const wordCount = commentText.split(/\s+/).filter(Boolean).length;
   if (wordCount > 100) {
     alert('Your comment exceeds the 100 word limit. Please make it shorter.');
     return;
   }
-  
-  // Create new comment object
+
   const newComment = {
     name: commenterName,
     text: commentText,
     date: new Date().toLocaleDateString()
   };
-  
-  // Add to item's comments array
+
   if (!objects[category][index].comments) {
     objects[category][index].comments = [];
   }
-  
+
   objects[category][index].comments.push(newComment);
-  
-  // Clear the input fields
+
   document.getElementById('commenter-name').value = '';
   document.getElementById('new-comment').value = '';
   document.getElementById('word-count').textContent = '0';
-  
-  // Update the display
+
   displayComments(objects[category][index].comments);
 }
 
+// Closes the detail modal and restores page scrolling
 function closeModal() {
   const modal = document.getElementById('detail-modal');
   modal.classList.remove('active');
-  document.body.style.overflow = 'auto'; // Restore scrolling
+  document.body.style.overflow = 'auto';
 }
 
+// Toggles between dark and light mode themes
 function toggleTheme() {
   const body = document.body;
   const toggleIcon = document.querySelector('.toggle-icon');
-  
+
   if (body.classList.contains('dark-mode')) {
     body.classList.remove('dark-mode');
     body.classList.add('light-mode');
@@ -779,22 +697,18 @@ function toggleTheme() {
   }
 }
 
-// Function to open the add item form
+// Opens the modal form to add a new item, with fields based on category
 function openAddItemForm() {
   const addModal = document.getElementById('add-item-modal');
   const selectedCategory = document.getElementById("categorySelect").value;
   const form = document.getElementById('add-item-form');
-  
-  // Clear previous form
+
   form.innerHTML = '';
-  
-  // Set form title (fixing the grammar)
+
   const categoryTitle = selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1);
   document.getElementById('add-item-title').textContent = `Add New ${categoryTitle}`;
-  
-  // Create different form fields based on category
+
   if (selectedCategory === 'songs') {
-    // Song form fields
     form.innerHTML = `
       <div class="form-group">
         <label for="new-item-title">Title *</label>
@@ -826,7 +740,6 @@ function openAddItemForm() {
       </div>
     `;
   } else if (selectedCategory === 'soccer') {
-    // Soccer form fields
     form.innerHTML = `
       <div class="form-group">
         <label for="new-item-name">Player Name *</label>
@@ -870,7 +783,6 @@ function openAddItemForm() {
       </div>
     `;
   } else if (selectedCategory === 'podcasters') {
-    // Podcaster form fields
     form.innerHTML = `
       <div class="form-group">
         <label for="new-item-title">Name *</label>
@@ -898,40 +810,35 @@ function openAddItemForm() {
       </div>
     `;
   }
-  
-  // Add form actions
+
   form.innerHTML += `
     <div class="form-actions">
       <button type="submit" class="submit-btn">Add ${categoryTitle}</button>
       <button type="button" class="cancel-btn" onclick="document.getElementById('add-item-modal').classList.remove('active')">Cancel</button>
     </div>
   `;
-  
-  // Show modal
+
   addModal.classList.add('active');
 }
 
-// Function to submit new item
+// Handles submission of the add item form and updates the catalog
 function submitNewItem() {
   const selectedCategory = document.getElementById("categorySelect").value;
-  
+
   if (selectedCategory === "songs") {
-    // Get song form inputs
     const title = document.getElementById("new-item-title").value;
     const artist = document.getElementById("new-item-artist").value;
     const genre = document.getElementById("new-item-genre").value;
     const streams = document.getElementById("new-item-streams").value;
     const releaseYear = document.getElementById("new-item-release-year").value;
-    const imageUrl = document.getElementById("new-item-image").value || "https://upload.wikimedia.org/wikipedia/commons/c/c0/Music_note_icon.svg"; // Default image if none provided
+    const imageUrl = document.getElementById("new-item-image").value || "https://upload.wikimedia.org/wikipedia/commons/c/c0/Music_note_icon.svg";
     const lyrics = document.getElementById("new-item-lyrics").value;
-    
-    // Validate mandatory fields
+
     if (!title || !artist || !genre || !streams || !releaseYear || !lyrics) {
       alert("Please fill in all required fields marked with *.");
       return;
     }
-    
-    // Create a new song object
+
     const newSong = {
       title: title,
       artist: artist,
@@ -944,38 +851,34 @@ function submitNewItem() {
       details: {
         releaseYear: releaseYear,
         genre: genre,
-        duration: "N/A", // Default value
-        label: "N/A" // Default value
+        duration: "N/A",
+        label: "N/A"
       },
       lyrics: lyrics,
       streams: streams
     };
-    
-    // Add the new song to the songs array
+
     objects.songs.push(newSong);
-    
+
   } else if (selectedCategory === "soccer") {
-    // Get soccer player form inputs
     const name = document.getElementById("new-item-name").value;
     const team = document.getElementById("new-item-team").value;
     const position = document.getElementById("new-item-position").value;
     const age = document.getElementById("new-item-age").value;
     const nationality = document.getElementById("new-item-nationality").value;
-    const imageUrl = document.getElementById("new-item-image").value || "https://upload.wikimedia.org/wikipedia/commons/e/e8/Soccer_ball_icon.svg"; // Default image if none provided
+    const imageUrl = document.getElementById("new-item-image").value || "https://upload.wikimedia.org/wikipedia/commons/e/e8/Soccer_ball_icon.svg";
     const height = document.getElementById("new-item-height").value;
     const weight = document.getElementById("new-item-weight").value;
     const biography = document.getElementById("new-item-biography").value;
     const dailyRoutine = document.getElementById("new-item-daily-routine").value;
-    
-    // Validate mandatory fields
+
     if (!name || !team || !position || !age || !nationality || !biography) {
       alert("Please fill in all required fields marked with *.");
       return;
     }
-    
-    // Create a new soccer player object
+
     const newPlayer = {
-      title: name, // Using 'title' to maintain consistency with data structure
+      title: name,
       team: team,
       image: imageUrl,
       notes: [
@@ -984,7 +887,7 @@ function submitNewItem() {
         `From ${nationality}.`
       ],
       details: {
-        birthDate: `January 1, ${new Date().getFullYear() - age}`, // Approximate birth date
+        birthDate: `January 1, ${new Date().getFullYear() - age}`,
         age: age,
         nationality: nationality,
         position: position,
@@ -995,26 +898,22 @@ function submitNewItem() {
       dailyRoutine: dailyRoutine || "No information available",
       funFacts: ["A new rising star in football."]
     };
-    
-    // Add the new player to the soccer array
+
     objects.soccer.push(newPlayer);
-    
+
   } else if (selectedCategory === "podcasters") {
-    // Get podcaster form inputs
     const name = document.getElementById("new-item-title").value;
     const show = document.getElementById("new-item-show").value;
-    const imageUrl = document.getElementById("new-item-image").value || "https://upload.wikimedia.org/wikipedia/commons/4/4f/Podcast_icon.svg"; // Default image if none provided
+    const imageUrl = document.getElementById("new-item-image").value || "https://upload.wikimedia.org/wikipedia/commons/4/4f/Podcast_icon.svg";
     const expertise = document.getElementById("new-item-expertise").value;
     const education = document.getElementById("new-item-education").value;
     const biography = document.getElementById("new-item-biography").value;
-    
-    // Validate mandatory fields
+
     if (!name || !show || !expertise || !biography) {
       alert("Please fill in all required fields marked with *.");
       return;
     }
-    
-    // Create a new podcaster object
+
     const newPodcaster = {
       title: name,
       show: show,
@@ -1039,30 +938,23 @@ function submitNewItem() {
         "Coming soon"
       ],
       biography: biography,
-      links: {} // No links initially
+      links: {}
     };
-    
-    // Add the new podcaster to the podcasters array
+
     objects.podcasters.push(newPodcaster);
   }
-  
-  // Close the modal
+
   document.getElementById("add-item-modal").classList.remove("active");
-  
-  // Refresh the display to include the new item
   showCards();
 }
 
 // Function to delete an item
 function deleteItem(category, index) {
   if (confirm(`Are you sure you want to delete this ${category.slice(0, -1)}?`)) {
-    // Remove the item from the array
     objects[category].splice(index, 1);
-    
-    // Refresh the display
+
     const currentCategory = document.getElementById("categorySelect").value;
     if (currentCategory === category) {
-      // Reset filters and search to show updated list
       resetFiltersAndSearch();
       displayItems(category);
     }
@@ -1073,11 +965,11 @@ function deleteItem(category, index) {
 window.addEventListener('click', function(event) {
   const detailModal = document.getElementById('detail-modal');
   const addModal = document.getElementById('add-item-modal');
-  
+
   if (event.target === detailModal) {
     closeModal();
   }
-  
+
   if (event.target === addModal) {
     addModal.classList.remove('active');
   }
@@ -1099,16 +991,14 @@ document.addEventListener('keydown', function(event) {
 document.addEventListener("DOMContentLoaded", function() {
   setupLikeSystem();
   showCards();
-  // Initially hide the special content box
   document.getElementById("special-content-box").style.display = "none";
 });
 
 // Helper function to create social media links HTML
 function createSocialLinksHtml(links, type) {
   let html = '<li class="social-links">';
-  
+
   if (type === 'soccer') {
-    // Soccer player social links
     if (links.instagram) {
       html += `<a href="${links.instagram}" target="_blank" class="social-link instagram" title="Instagram"><i class="icon-instagram"></i>Instagram</a>`;
     }
@@ -1122,7 +1012,6 @@ function createSocialLinksHtml(links, type) {
       html += `<a href="${links.transfermarkt}" target="_blank" class="social-link transfermarkt" title="Transfermarkt Profile"><i class="icon-stats"></i>Stats</a>`;
     }
   } else if (type === 'podcaster') {
-    // Podcaster social links
     if (links.twitter) {
       html += `<a href="${links.twitter}" target="_blank" class="social-link twitter" title="Twitter"><i class="icon-twitter"></i>Twitter</a>`;
     }
@@ -1139,7 +1028,6 @@ function createSocialLinksHtml(links, type) {
       html += `<a href="${links.spotify}" target="_blank" class="social-link spotify" title="Spotify"><i class="icon-spotify"></i>Spotify</a>`;
     }
   } else if (type === 'song') {
-    // Song streaming links
     if (links.spotify) {
       html += `<a href="${links.spotify}" target="_blank" class="social-link spotify" title="Listen on Spotify"><i class="icon-spotify"></i>Spotify</a>`;
     }
@@ -1150,7 +1038,7 @@ function createSocialLinksHtml(links, type) {
       html += `<a href="${links.youtube}" target="_blank" class="social-link youtube" title="Watch on YouTube"><i class="icon-youtube"></i>YouTube</a>`;
     }
   }
-  
+
   html += '</li>';
   return html;
 }
@@ -1165,5 +1053,5 @@ function parseStreamNumber(streams) {
       return parseFloat(lowerCaseStreams) * 1_000_000_000;
     }
   }
-  return parseFloat(streams) || 0; // Default to 0 if parsing fails
+  return parseFloat(streams) || 0;
 }

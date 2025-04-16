@@ -1,3 +1,6 @@
+Published: https://kananibadzade.github.io/sea-catalog/
+
+
 # SEA Stage 2 - Data Catalog Project
 
 This repository contains the instructions, requirements, and starter code for Stage Two of the Snap Engineering Academy application process.

@@ -25,7 +25,7 @@ const objects = {
         label: "Universal Records"
       },
       lyrics: "Hey baby, don't you worry\nEven though the road is rocky\nI'll be coming home to you again\nIt's only a day or two\nI'll be coming home to you again\nIt's only a day or two",
-      fullLyrics: "Hey baby, don't you worry\nEven though the road is rocky\nI'll be coming home to you again\nIt's only a day or two\nI'll be coming home to you again\nIt's only a day or two\n\nRecognize that the youths are the future\nGot to protect and guide and teach them culture\nThe world's about to blow and we need to know\nGot to protect and teach them right though, hey baby\n\nMake your life worth living\nDon't be ungrateful\nYou're truly blessed, yeah\nCount your blessings\nLove and happiness\nWhat you want to fulfill, yeah",
+      fullLyrics: "Hey baby, don't you worry\nEven though the road is rocky\nI'll be coming home to you again\nIt's only a day or two\nI'll be coming home to you again\nIt's only a day or two\nRecognize that the youths are the future\nGot to protect and guide and teach them culture\nThe world's about to blow and we need to know\nGot to protect and teach them right though, hey baby\nMake your life worth living\nDon't be ungrateful\nYou're truly blessed, yeah\nCount your blessings\nLove and happiness\nWhat you want to fulfill, yeah\nI've been gone awhile away from you and I hope you overstand\nThat I've got to do what I must do to be a better man\n'Cause if I was just to act a fool, do nothing with myself\nThen all my blessings would be cursed, my world would be crumble in\nIt's a joy when I sit down and think of the good times that we have\nAnd what we do to make it through when the good turns into bad\nWell, I hope you'll find it in your heart and know these words are true\nAnd please don't fuss because I must go do what I must do\nHey baby, don't you worry, even though the road is rocky\nI'll be coming home to you again\n'Cause if you thought that I was lost, I had to bare my cross\nNow I'm free from all these chains\nA time, a space, a different place, how perfect we might be\nI would be the wind that blows, you'd be that willow tree\nAnd I could never bare the thought of you not by my side\nSo I would be the warmth of day, you'd be the cool of night\nAnd every day I pray to Jah that one day you will see\nAnd overstand the fact I must fulfill my destiny\nI hope you'll find it in your heart and know these words are true\nAnd please don't cry, you know that I must do what I must do\nHey baby, don't you worry, even though the road is rocky\nI'll be coming home to you again\n'Cause if you thought that I was lost, I had to bare my cross\nNow I'm free from all these chains\nWell, and it's not easy\nJah knows how I tried, I tried\nSo don't you get weary (oh God)\nJah knows how I tried, I tried\nAnd God knows that life is one big road\nWith a lot of signs and turns and twist and curves\nEven though the road is rocky\nBut maintain to ride and keep on rockin'\nFrom city to city, backyard to yard\nAnd we be seein' the cites standin' under the lights\nAnd the spot is hot, it's cold and lonely at nights\nAnd I'm feenin' and I'm dreamin' and I'm holdin' you tight\nBut hold on, every single road I rode on\nCome to an end and I'm back home again\nSo baby, please don't cry\n'Cause no valley low and is no mountain high\nAnd our love don't die with the passage of time\nIt just grow more, it just keep strong\nAnd even though I'm gone, I ain't movin' too far\nYou're the light through the dark, shinnin' right through my heart\nSo my journey just start\nEven though the road is rocky\nI'll be coming home to you again\n'Cause if you thought that I was lost, I have to bare my cross\nNow I'm free from all these chains\n'Cause if you thought that I was lost, I have to bare my cross\nNow I'm free from all these chains...",
       streams: "15.2 million",
       awards: "Best Collaboration Award (2008)",
       links: {
@@ -33,26 +33,6 @@ const objects = {
         appleMusic: "https://music.apple.com/us/album/hey-baby-feat-mos-def/1440769931?i=1440769945",
         youtube: "https://www.youtube.com/watch?v=DOTUzWtr5Yg"
       },
-      recommendations: [
-        { 
-          artist: "Damian Marley", 
-          title: "Welcome to Jamrock",
-          image: "https://upload.wikimedia.org/wikipedia/en/5/58/Damian_Marley_-_Welcome_to_Jamrock.jpg",
-          url: "https://www.youtube.com/watch?v=_GZlJGERbvE"
-        },
-        { 
-          artist: "Black Thought", 
-          title: "Quiet Trip",
-          image: "https://upload.wikimedia.org/wikipedia/en/1/1b/Streams_of_Thought%2C_Vol._3_-_Cane_%26_Able.jpg",
-          url: "https://www.youtube.com/watch?v=QQ2ZRfh9ykg"
-        },
-        { 
-          artist: "Nas & Damian Marley", 
-          title: "As We Enter",
-          image: "https://upload.wikimedia.org/wikipedia/en/9/94/Distant_Relatives_album_cover.jpg",
-          url: "https://www.youtube.com/watch?v=OMGd3mAfl-0"
-        }
-      ]
     },
     {
       title: "Travellin' Man",
@@ -70,8 +50,8 @@ const objects = {
         duration: "3:45",
         label: "H2O Records"
       },
-      lyrics: "I've been many places, I've seen many faces\nPlayin' my hand right, livin' for the night\nTravellin' man, travellin' man\nGot to keep movin', can't stop groovin'",
-      fullLyrics: "I've been many places, I've seen many faces\nPlayin' my hand right, livin' for the night\nTravellin' man, travellin' man\nGot to keep movin', can't stop groovin'\n\nYou got your itinerary, but my route's impromptu\nUp, down, all around, I been where you might go to\nWe all meet up at the crossroads eventually\n\nTravellin' man, travellin' man\nGot to keep movin', can't stop groovin'\nNever settle down, always searchin', always learnin'\nSometimes burnin' bridges, but I'm still returnin'",
+      lyrics: "Yeah yo yo what time the plane leavin?\nAhhh alright, I see you at the airport\nsamples of r-r-r-r-rock on",
+      fullLyrics: "Intro:\nYeah yo yo what time the plane leavin?\nAhhh alright, I see you at the airport\n*samples of \"r-r-r-r-rock on\"*\n\nChorus:\nMemories don't live like people do\nThey always remember you\nWhether things are good or bad, it's just the memories\n\nMemories don't live like people do-o\nBaby don't forget me, I'm a travellin' man\nMovin through places, space and time\nGotta lotta things I got to do\nGod willin' I'm comin back to you\nMy baby boo\n\nI'm a travellin' man\nMovin through places, space and time(space and tiiiime)\nGotta lotta things I got to do\nBut God willin' I'm comin back to you\nBaby boo\nI'm leavin\n\nVerse 1:\nWell go 'head and leave\nThe call heard 'round the world from the wives of mc's\nThese cats is playin all that half a pound\nA garment bag we snatch it down\nAin't got the state but we could prob'ly run a blacker town\nScenarios like this is tear jerkers\nFor the modern mc I ain't a blue collar worker\n'cause this thing called rhymin' no different from coal minin'\nWe both on assignment to unearth the diamond\nWhen you start climbin'\nAnd then I start shinin'\nYou be strugglin' and strivin'\nAnd they think you prime-timin'\nMatain and keep silence make note and observation\nThis confrontation\nThis is the daily operation\nA concentration\nStay focused on my recitation\n'bout to reach my destination with the balls of hesitation\nBaby make the preperation 'cause this ain't no recreation\nThis is pro ball!\nAnd we lettin you know y'all\nAt the show y'all\nDoin' this for dough y'all\nGet the phone call\nAnd I'm ready to blow y'all\n'bout to go y'all\nBeen a pleasure to know y'all\nAnd I'm lettin' you know that...\n\nChorus:\nMemories don't live like people do\nThey always remember you\nWether things are good or bad, it's just the memories\n\nMemories don't live like people do-o\nBaby don't forget me, I'm a travellin' man\nMovin through places, space and time\nGotta lotta things I got to do\nG-d willin I'm comin back to you\nMy baby boo\n\nI'm a travellin' man\nMovin through places, space and time(space and tiiiime)\nGotta lotta things I got to do\nBut inshallah I'm comin back to you\nBaby boo\nI'm leavin\n\nVerse 2:\nBut God willin' I'll be back home\nTo drop these heavy ass bags up off my backbone\nAround the world with a catalog of rap songs\nMy baby girl is walkin, been away for that long\nBut no you haven't well least that's how it seem to me\nMy home town is like a whole different scenery\nThe old timers on the stoop leaning leisurely\nThe new jacks up in the bar smokin greenery\nEasily taken for granted when you up in it but it's sweet scented\nWhen you been down for a minute\nMove around city damage\nBreak it down with the vintage\nThe innovative\nClassical b-boy image\nCollect the winners\n'cause thats the reason that we came here\nThis thing is not a game here\nThe fortune not the fame here\nFrom new york to the cakalaks\nCali in the caddilacs\nChicago know we innovate\nInfiltrate virginia state\nDc make me say your name\nPhilly know we penatrate\nGeorgia make us generate\nLike suns as they create the pace\nThey celebrate to my jams in foreign lands\nEven your mans in japan know who I am\nMinasan, like everybody out in nippon\nSay ichiban, may God have well where your getting from\nPhenomenom, 'scuse me that's a phone call\nIts the show y'all\nTryin' to get this dough y'all\n'bout to blow y'all\nBeen a pleasure to know y'all\nAnd I'm lettin' you know that...\n\nChorus:\nMemories don't live like people do\nThey always remember you\nWether things are good or bad, it's just the memories\n\nMemories don't live like people do-o\nBaby don't forget me, I'm a travellin' man\nMovin through places, space and time\nGotta lotta things I got to do\nBut inshallah I'm comin back to you\nMy baby boo\n\nI'm a travellin' man\nMovin through places, space and time(space and tiiiime)\nGotta lotta things I got to do\nBut g-d willin I'm comin back to you\nBack to you\n\nI'm leeaaavvvvinnn'!\nI'll be back to you\nI'm leeaaavvvvinnn'!\nI'll be back to you\n\nAll over the world we go\nDc all over the world we go\nVa all over the world we go\nThe ? cakalaks? all over the world we go\nLondon all over the world we go\nJapan we go over the world we go\nParis we go over the world we go\n\n(beat playing in background and samples of\n*samples of \"r-r-r-r-rock on\"*)\n1-2, 1-2...all aboard!",
       streams: "8.7 million",
       awards: "Underground Hit of the Year (1999)",
       links: {
@@ -79,26 +59,6 @@ const objects = {
         appleMusic: "https://music.apple.com/us/album/travellin-man-feat-mos-def-remastered/320626506",
         youtube: "https://www.youtube.com/watch?v=YdQ_wn-g5aU"
       },
-      recommendations: [
-        { 
-          artist: "Talib Kweli", 
-          title: "Get By",
-          image: "https://upload.wikimedia.org/wikipedia/en/5/5e/Quality_Talib_Kweli.jpg",
-          url: "https://www.youtube.com/watch?v=UVtpXvzzXiA"
-        },
-        { 
-          artist: "The Roots", 
-          title: "You Got Me",
-          image: "https://upload.wikimedia.org/wikipedia/en/d/df/The_Roots_Things_Fall_Apart.jpg",
-          url: "https://www.youtube.com/watch?v=MJCHeEQV454"
-        },
-        { 
-          artist: "Common", 
-          title: "The Light",
-          image: "https://upload.wikimedia.org/wikipedia/en/f/f3/Common_Like_Water_for_Chocolate.jpg",
-          url: "https://www.youtube.com/watch?v=OjHX7jf-znA"
-        }
-      ]
     },
     {
       title: "No Role Modelz",
@@ -117,7 +77,7 @@ const objects = {
         label: "Dreamville Records"
       },
       lyrics: "First things first rest in peace Uncle Phil\nFor real, you the only father that I ever knew\nI get my bitch pregnant I'ma be a better you\nProphesies that I made way back in the Ville",
-      fullLyrics: "First things first rest in peace Uncle Phil\nFor real, you the only father that I ever knew\nI get my bitch pregnant I'ma be a better you\nProphesies that I made way back in the Ville\n\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\n\nNow I ain't tryna tell you what to do\nBut if your girl ain't actin' right for you\nIt's simple, you can cut her loose\nOr be like me and just say 'fool me twice'",
+      fullLyrics: "First things first rest in peace Uncle Phil\nFor real, you the only father that I ever knew\nI get my bitch pregnant I'ma be a better you\nProphecies that I made way back in the Ville\nFulfilled, listen even back when we was broke my team ill\nMartin Luther King would have been on Dreamville\nTalk to a nigga\nOne time for my LA sisters\nOne time for my LA hoes\nLame niggas can't tell the difference\nOne time for a nigga who knows\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nNo role models and I'm here right now\nNo role models to speak of\nSearchin' through my memory, my memory\nI couldn't find one\nLast night I was gettin' my feet rubbed\nBy the baddest bitch, not Trina, but I swear to God\nThis bitch will make you call your girl up and tell her, \"Hey, what's good?\nSorry I'm never comin' home I'ma stay for good\"\nThen hang the phone up, and proceed to lay the wood\nI came fast like 9-1-1 in white neighborhoods\nAin't got no shame 'bout it\nShe think I'm spoiled and I'm rich 'cause I can have any bitch\nI got defensive and said \"Nah, I was the same without it\"\nBut then I thought back, back to a better me\nBefore I was a B-list celebrity\nBefore I started callin' bitches, \"bitches\" so heavily\nBack when you could get a platinum plaque without no melody\nYou wasn't sweatin' me\nOne time for my LA sisters\nOne time for my LA hoes\nLame niggas can't tell the difference\nOne time for a nigga who knows\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nI want a real love, dark skinned and Aunt Viv love\nThat Jada and that Will love\nThat leave a toothbrush at your crib love\nAnd you ain't gotta wonder whether that's your kid love\nNigga I don't want no bitch from reality shows\nOut of touch with reality hoes\nOut in Hollywood bringin' back 5 or 6 hoes\nFuck 'em then we kick em' to the door\nNigga you know how it go\nShe deserved that, she a bird, it's a bird trap\nYou think if I didn't rap she would flirt back?\nTakin' off her skirt, let her wear my shirt before she leave\nI'ma need my shirt back\nNigga you know how it go\nOne time for my LA sisters\nOne time for my LA hoes\nLame niggas can't tell the difference\nOne time for a nigga who knows\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nThere's an old saying in Tennessee, I know it's in Texas\nProbably in Tennessee, that says\n\"Fool me once, shame on\nShame on you\"\nFool me, we can't get fooled again\nFool me one time shame on you\nFool me twice, can't put the blame on you\nFool me three times, fuck the peace signs\nLoad the chopper, let it rain on you\nFool me one time shame on you\nFool me twice, can't put the blame on you\nFool me three times, fuck the peace signs\nLoad the chopper, let it rain on you\nMy only regret was too young for Lisa Bonet\nMy only regret was too young for Nia Long\nNow all I'm left with is hoes from reality shows\nHand her a script the bitch probably couldn't read along\nMy only regret was too young for Sade Adu\nMy only regret could never take Aaliyah home\nNow all I'm left with is hoes up in Greystone\nWith the stale face cause they know it's they song\nShe shallow but the pussy deep (she shallow, she shallow)\nShe shallow but the pussy deep (she shallow, she shallow)\nShe shallow but the pussy deep (she shallow, she shallow)\nShe shallow but the pussy deep (she shallow, she shallow)\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved\nDon't save her, she don't wanna be saved",
       streams: "1.2 billion",
       awards: "Multi-Platinum Certification",
       links: {
@@ -125,26 +85,6 @@ const objects = {
         appleMusic: "https://music.apple.com/us/album/no-role-modelz/1600766204?i=1600766436",
         youtube: "https://www.youtube.com/watch?v=J-6eUsSKv7Q"
       },
-      recommendations: [
-        { 
-          artist: "Kendrick Lamar", 
-          title: "HUMBLE.",
-          image: "https://upload.wikimedia.org/wikipedia/en/4/4e/Kendrick_Lamar_-_Damn.png",
-          url: "https://www.youtube.com/watch?v=tvTRZJ-4EyI"
-        },
-        { 
-          artist: "Drake", 
-          title: "God's Plan",
-          image: "https://upload.wikimedia.org/wikipedia/en/9/90/Scorpion_by_Drake.jpg",
-          url: "https://www.youtube.com/watch?v=xpVfcZ0ZcFM"
-        },
-        { 
-          artist: "J. Cole", 
-          title: "Middle Child",
-          image: "https://upload.wikimedia.org/wikipedia/en/1/16/J._Cole_-_Middle_Child.png",
-          url: "https://www.youtube.com/watch?v=WILNIXZr2oc"
-        }
-      ]
     },
     {
       title: "Me Say",
@@ -162,8 +102,8 @@ const objects = {
         duration: "3:56",
         label: "Chapter Two Records"
       },
-      lyrics: "Me say go fight for your rights\nMe say don't give up the fight\nStand up and fight for your life\nThe time has come to unite",
-      fullLyrics: "Me say go fight for your rights\nMe say don't give up the fight\nStand up and fight for your life\nThe time has come to unite\n\nTime come for justice and equality\nSistren and brethren unite and be free\nDefenders of truth, we have to agree\nProud of our heritage, proud of our history\n\nMe say oh-oh-oh, oh-oh\nMe say oh-oh-oh, oh-oh\nMe say go fight for your rights\nMe say don't give up the fight",
+      lyrics: "People flee\nThe glances of the others\nEach one is in his own stress\nEveryone trace his own path\nWithout raising the eyes towards people\n",
+      fullLyrics: "People flee\nThe glances of the others\nEach one is in his own stress\nEveryone trace his own path\nWithout raising the eyes towards people\n\n[Refrain]\nVision of ordinary thing that are unusual\nWe remain alone in the city\nWe all need human heat (bis)\n\nThis world is acting as blind\nWe are seeing the truth\nEveryone traces is own path\nWithout raising the eyes towards people (bis)\n\n[Refrain]\nWe only need a little something\nTo fix our human relations\nWe only need a little something\nTo clear the atmosphere\nBecause indifference will reign (bis)\n\n[Refrain]",
       streams: "3.5 million",
       awards: "Best Reggae Track (European Reggae Awards)",
       links: {
@@ -171,26 +111,6 @@ const objects = {
         appleMusic: "https://music.apple.com/us/album/me-say/250197870?i=250197943",
         youtube: "https://www.youtube.com/watch?v=ni36rdQa2XE"
       },
-      recommendations: [
-        { 
-          artist: "Protoje", 
-          title: "Who Knows",
-          image: "https://upload.wikimedia.org/wikipedia/en/7/7a/Protoje_Ancient_Future.jpg",
-          url: "https://www.youtube.com/watch?v=hzqFmXZ8tOE"
-        },
-        { 
-          artist: "Chronixx", 
-          title: "Here Comes Trouble",
-          image: "https://upload.wikimedia.org/wikipedia/en/6/6a/Chronology_album_cover.jpg",
-          url: "https://www.youtube.com/watch?v=LfeIfiiBTfY"
-        },
-        { 
-          artist: "Damian Marley", 
-          title: "Road to Zion",
-          image: "https://upload.wikimedia.org/wikipedia/en/4/4d/DamianMarley-WelcomeToJamrock.jpg",
-          url: "https://www.youtube.com/watch?v=kD9MRKDICgo"
-        }
-      ]
     },
     {
       title: "Freed from Desire",
@@ -208,8 +128,9 @@ const objects = {
         duration: "3:40",
         label: "Do It Yourself"
       },
-      lyrics: "Freed from desire, mind and senses purified\nFreed from desire, mind and senses purified\nNa-na-na-na-na, na-na, na-na-na, na-na-na\nNa-na-na-na-na, na-na, na-na-na, na-na-na",
-      fullLyrics: "Freed from desire, mind and senses purified\nFreed from desire, mind and senses purified\nNa-na-na-na-na, na-na, na-na-na, na-na-na\nNa-na-na-na-na, na-na, na-na-na, na-na-na\n\nMy love has got no money, he's got his strong beliefs\nMy love has got no power, he's got his strong beliefs\nMy love has got no fame, he's got his strong beliefs\nMy love has got no money, he's got his strong beliefs\n\nWant more and more, people just want more and more\nFreedom and love, what he's looking for\nWant more and more, people just want more and more\nFreedom and love, what he's looking for",
+      lyrics: "My love has got no money, he's got his strong beliefs\nMy love has got no power, he's got his strong beliefs\nMy love has got no fame, he's got his strong beliefs\nMy love has got no money, he's got his strong beliefs\nWant more and more, people just want more and more\n",
+      fullLyrics: "My love has got no money, he's got his strong beliefs\nMy love has got no power, he's got his strong beliefs\nMy love has got no fame, he's got his strong beliefs\nMy love has got no money, he's got his strong beliefs\nWant more and more, people just want more and more\nFreedom and love, what he's looking for\nWant more and more, people just want more and more\nFreedom and love, what he's looking for\nFreed from desire, mind and senses purified\nFreed from desire, mind and senses purified\nFreed from desire, mind and senses purified\nFreed from desire\nNa-na-na-na-na, na-na, na-na-na, na-na-na\nNa-na-na-na-na, na-na, na-na-na, na-na-na\nNa-na-na-na-na, na-na, na-na-na, na-na-na\nNa-na-na-na-na, na-na, na-na-na, na-na-na\nMy love has got no money, he's got his strong beliefs\nMy love has got no power, he's got his strong beliefs\nMy love has got no fame, he's got his strong beliefs\nMy love has got no money, he's got his strong beliefs\nWant more and more, people just want more and more\nFreedom and love, what he's looking for\nWant more and more, people just want more and more\nFreedom and love, what he's looking for\nFreed from desire, mind and senses purified\nFreed from desire, mind and senses purified\nFreed from desire, mind and senses purified\nFreed from desire\nNa-na-na-na-na, na-na, na-na-na, na-na-na\nNa-na-na-na-na, na-na, na-na-na, na-na-na\nNa-na-na-na-na, na-na, na-na-na, na-na-na\nNa-na-na-na-na, na-na, na-na-na, na-na-na"
+,
       streams: "350 million",
       awards: "Multiple Gold and Platinum certifications",
       links: {
@@ -217,26 +138,6 @@ const objects = {
         appleMusic: "https://music.apple.com/us/album/freed-from-desire/287591338?i=287592533",
         youtube: "https://www.youtube.com/watch?v=p3l7fgvrEKM"
       },
-      recommendations: [
-        { 
-          artist: "Corona", 
-          title: "The Rhythm of the Night",
-          image: "https://upload.wikimedia.org/wikipedia/en/d/d5/TheRhythmoftheNight.jpg",
-          url: "https://www.youtube.com/watch?v=u3ltZmI5LQw"
-        },
-        { 
-          artist: "La Bouche", 
-          title: "Be My Lover",
-          image: "https://upload.wikimedia.org/wikipedia/en/3/39/Be_My_Lover_La_Bouche.jpg",
-          url: "https://www.youtube.com/watch?v=ydd9Dn3dQiI"
-        },
-        { 
-          artist: "Haddaway", 
-          title: "What Is Love",
-          image: "https://upload.wikimedia.org/wikipedia/en/9/96/Haddaway_-_What_Is_Love.jpg",
-          url: "https://www.youtube.com/watch?v=HEXWRTEbj1I"
-        }
-      ]
     },
     {
       title: "The Great Gig in the Sky",
@@ -255,7 +156,8 @@ const objects = {
         label: "Harvest/Capitol Records"
       },
       lyrics: "Instrumental with improvised vocals (no actual lyrics)",
-      fullLyrics: "The Great Gig in the Sky is an instrumental track with improvised wordless vocals by Clare Torry. The song conveys the stages of death through Richard Wright's piano composition and Torry's powerful vocal performance that ranges from soft moans to intense screams.",
+      fullLyrics: "[Intro: Gerry O'Driscoll]\n…And I am not frightened of dying, you know\nAny time will do, I don't mind\nWhy should I be frightened of dying?\nThere's no reason for it\nYou've gotta go sometime\n\n[Non-Lyrical Vocals: Clare Torry]\n\n[Interlude: Patricia Watts]\nI never said I was frightened of dying\n\n[Non-Lyrical Vocals: Clare Torry]"
+,
       streams: "125 million",
       awards: "Part of the album that stayed on Billboard charts for 741 weeks",
       links: {
@@ -263,26 +165,6 @@ const objects = {
         appleMusic: "https://music.apple.com/us/album/the-great-gig-in-the-sky/1065973699?i=1065973707",
         youtube: "https://www.youtube.com/watch?v=mPGv8L3a_sY"
       },
-      recommendations: [
-        { 
-          artist: "Pink Floyd", 
-          title: "Breathe (In the Air)",
-          image: "https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png",
-          url: "https://www.youtube.com/watch?v=mrojrDCI02k"
-        },
-        { 
-          artist: "Pink Floyd", 
-          title: "Us and Them",
-          image: "https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png",
-          url: "https://www.youtube.com/watch?v=nDbeqj-1XOo"
-        },
-        { 
-          artist: "Pink Floyd", 
-          title: "Comfortably Numb",
-          image: "https://upload.wikimedia.org/wikipedia/en/1/13/PinkFloyd-wall.jpg",
-          url: "https://www.youtube.com/watch?v=_FrOQC-zEog"
-        }
-      ]
     }
   ],
 

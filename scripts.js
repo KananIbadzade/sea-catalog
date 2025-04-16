@@ -1,16 +1,18 @@
-/**
- * Catalog Application - Logic and Functionality
- * 
- * This file contains all the functions and logic for the catalog application.
- * Data is imported from data.js for better code organization.
- */
+//************ Catalog Application - Logic and Functionality ************//
 
-// The data structures are now defined in data.js
+// The data structures are defined in data.js
 
-// Global variables for filtering and searching
-let filteredItems = []; // Store filtered/sorted items
-let currentFilter = 'none'; // Track current filter
+
+let filteredItems = []; // storing filtered or sorted items
+let currentFilter = 'none'; // track current filter
 let currentSearchTerm = ''; // Track current search term
+
+function setupLikeSystem() {
+  // Initialize likes in localStorage if needed
+  if (!localStorage.getItem('likedItems')) {
+    localStorage.setItem('likedItems', JSON.stringify({}));
+  }
+}
 
 function showCards() {
   const selectedCategory = document.getElementById("categorySelect").value;
@@ -31,11 +33,14 @@ function displayItems(category, items = null) {
   const displayedItems = items || objects[category];
   filteredItems = [...displayedItems]; // Store current displayed items
   
-    const cardContainer = document.getElementById("card-container");
-    cardContainer.innerHTML = "";
-    
-    const templateCard = document.querySelector(".card");
+  const cardContainer = document.getElementById("card-container");
+  cardContainer.innerHTML = "";
   
+  const templateCard = document.querySelector(".card");
+  
+  // Get liked items from localStorage
+  const likedItems = JSON.parse(localStorage.getItem('likedItems')) || {};
+
   if (displayedItems.length === 0) {
     const noResults = document.createElement("p");
     noResults.classList.add("no-results");
@@ -46,22 +51,90 @@ function displayItems(category, items = null) {
 
   for (let i = 0; i < displayedItems.length; i++) {
     const item = displayedItems[i];
-      const card = templateCard.cloneNode(true);
-      card.style.display = "block";
+    
+    // Initialize likes property if it doesn't exist
+    if (item.likes === undefined) {
+      item.likes = 0;
+    }
+    
+    const card = templateCard.cloneNode(true);
+    card.style.display = "block";
     card.dataset.index = items ? item.originalIndex : i; // Use original index if available
     card.dataset.category = category;
-  
-      card.querySelector("h2").textContent = item.title;
-      card.querySelector("img").src = item.image;
-      card.querySelector("img").alt = item.title;
-  
-      const ul = card.querySelector("ul");
-      ul.innerHTML = "";
-      for (let note of item.notes) {
-        const li = document.createElement("li");
-        li.textContent = note;
-        ul.appendChild(li);
+
+    card.querySelector("h2").textContent = item.title;
+    card.querySelector("img").src = item.image;
+    card.querySelector("img").alt = item.title;
+
+    const ul = card.querySelector("ul");
+    ul.innerHTML = "";
+    for (let note of item.notes) {
+      const li = document.createElement("li");
+      li.textContent = note;
+      ul.appendChild(li);
+    }
+
+    // Add like button and counter
+    const likeContainer = document.createElement("div");
+    likeContainer.className = "like-container";
+
+    const likeButton = document.createElement("button");
+    likeButton.className = "like-button";
+    likeButton.innerHTML = "❤️";
+    likeButton.title = "Like";
+
+    // Generate a unique ID for the item that's more consistent
+    const itemId = `${category}-${i}-${item.title.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase()}`;
+
+    // Get likes from localStorage
+    const likedItems = JSON.parse(localStorage.getItem('likedItems') || '{}');
+
+    // Check if user already liked this item
+    if (likedItems[itemId]) {
+      likeButton.classList.add("liked");
+      likeButton.disabled = true;
+    }
+
+    const likeCount = document.createElement("span");
+    likeCount.className = "like-count";
+    likeCount.textContent = item.likes > 0 ? item.likes : "";
+
+    // Add event listener for like button with explicit event stop
+    likeButton.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation(); // Prevent opening modal
+      
+      // Check if already liked
+      if (likedItems[itemId]) {
+        return; // Already liked, do nothing
       }
+      
+      // Update likes in the data
+      if (!item.likes) item.likes = 0;
+      item.likes++;
+      likeCount.textContent = item.likes;
+      
+      // Mark as liked in localStorage
+      likedItems[itemId] = true;
+      localStorage.setItem('likedItems', JSON.stringify(likedItems));
+      
+      // Update UI
+      likeButton.classList.add("liked");
+      likeButton.disabled = true;
+      
+      // Debug output to confirm like registration
+      console.log(`Liked item: ${itemId} - Current likes: ${item.likes}`);
+      
+      return false; // Ensure no propagation
+    });
+
+    // Position the like button more clearly
+    likeContainer.style.position = "relative";
+    likeContainer.style.zIndex = "10"; // Ensure it's above other elements
+
+    likeContainer.appendChild(likeButton);
+    likeContainer.appendChild(likeCount);
+    card.querySelector(".card-content").appendChild(likeContainer);
 
     // Add delete button
     const deleteBtn = document.createElement("button");
@@ -79,8 +152,8 @@ function displayItems(category, items = null) {
       const index = parseInt(this.dataset.index);
       openDetailModal(category, index);
     });
-  
-      cardContainer.appendChild(card);
+
+    cardContainer.appendChild(card);
   }
 }
 
@@ -369,6 +442,7 @@ function calculateAge(birthDateStr) {
   return age;
 }
 
+// Modify the openDetailModal function to fix the comments section
 function openDetailModal(category, index) {
   const modal = document.getElementById('detail-modal');
   const item = objects[category][index];
@@ -558,9 +632,130 @@ function openDetailModal(category, index) {
     modalList.appendChild(li);
   }
   
+  // Remove any existing comment section first to prevent duplication
+  const existingCommentSection = document.querySelector('.comments-section');
+  if (existingCommentSection) {
+    existingCommentSection.remove();
+  }
+  
+  // Add comment section to the modal
+  const commentsContainer = document.createElement('div');
+  commentsContainer.className = 'modal-section comments-section';
+  commentsContainer.innerHTML = `
+    <h3>Fan Comments</h3>
+    <div class="comments-list" id="comments-list"></div>
+    <div class="add-comment-form">
+      <input type="text" id="commenter-name" placeholder="Your name" maxlength="20" required>
+      <textarea id="new-comment" placeholder="Add your comment (max 100 words)..."></textarea>
+      <div class="word-counter"><span id="word-count">0</span>/100 words</div>
+      <button class="submit-btn" id="post-comment-btn">Post Comment</button>
+    </div>
+  `;
+  
+  document.querySelector('.modal-text').appendChild(commentsContainer);
+  
+  // Initialize comments array if it doesn't exist
+  if (!item.comments) {
+    item.comments = [];
+  }
+  
+  // Add word count listener
+  const commentTextarea = document.getElementById('new-comment');
+  commentTextarea.addEventListener('input', function() {
+    const words = this.value.trim().split(/\s+/).filter(Boolean).length;
+    document.getElementById('word-count').textContent = words;
+    
+    // Disable button if word count exceeds 100
+    const submitBtn = document.getElementById('post-comment-btn');
+    if (words > 100) {
+      submitBtn.disabled = true;
+      document.getElementById('word-count').style.color = 'red';
+    } else {
+      submitBtn.disabled = false;
+      document.getElementById('word-count').style.color = '';
+    }
+  });
+  
+  // Add click event for posting comment
+  document.getElementById('post-comment-btn').addEventListener('click', function() {
+    addComment(category, index);
+  });
+  
+  // Display existing comments
+  displayComments(item.comments);
+  
   // Show the modal with animation
   modal.classList.add('active');
   document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+// Update the displayComments function
+function displayComments(comments) {
+  const commentsList = document.getElementById('comments-list');
+  commentsList.innerHTML = '';
+  
+  if (!comments || comments.length === 0) {
+    commentsList.innerHTML = '<p class="no-comments">No comments yet. Be the first to share your thoughts!</p>';
+    return;
+  }
+  
+  comments.forEach((comment) => {
+    const commentEl = document.createElement('div');
+    commentEl.className = 'comment';
+    commentEl.innerHTML = `
+      <div class="comment-header">
+        <span class="comment-author">${comment.name || 'Anonymous Fan'}</span>
+        <span class="comment-date">${comment.date}</span>
+      </div>
+      <div class="comment-content">${comment.text}</div>
+    `;
+    commentsList.appendChild(commentEl);
+  });
+}
+
+// Update the addComment function
+function addComment(category, index) {
+  const commenterName = document.getElementById('commenter-name').value.trim().substring(0, 20);
+  const commentText = document.getElementById('new-comment').value.trim();
+  
+  if (!commenterName) {
+    alert('Please enter your name before posting.');
+    return;
+  }
+  
+  if (!commentText) {
+    alert('Please enter a comment before posting.');
+    return;
+  }
+  
+  // Check word count
+  const wordCount = commentText.split(/\s+/).filter(Boolean).length;
+  if (wordCount > 100) {
+    alert('Your comment exceeds the 100 word limit. Please make it shorter.');
+    return;
+  }
+  
+  // Create new comment object
+  const newComment = {
+    name: commenterName,
+    text: commentText,
+    date: new Date().toLocaleDateString()
+  };
+  
+  // Add to item's comments array
+  if (!objects[category][index].comments) {
+    objects[category][index].comments = [];
+  }
+  
+  objects[category][index].comments.push(newComment);
+  
+  // Clear the input fields
+  document.getElementById('commenter-name').value = '';
+  document.getElementById('new-comment').value = '';
+  document.getElementById('word-count').textContent = '0';
+  
+  // Update the display
+  displayComments(objects[category][index].comments);
 }
 
 function closeModal() {
@@ -902,7 +1097,8 @@ document.addEventListener('keydown', function(event) {
 
 // This calls the showCards() function when the page is first loaded
 document.addEventListener("DOMContentLoaded", function() {
-      showCards();
+  setupLikeSystem();
+  showCards();
   // Initially hide the special content box
   document.getElementById("special-content-box").style.display = "none";
 });
